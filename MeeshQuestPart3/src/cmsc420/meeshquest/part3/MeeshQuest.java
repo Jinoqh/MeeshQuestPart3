@@ -178,7 +178,7 @@ public class MeeshQuest {
         } else if (name.equals("unmapPortal")){
         	command.processUnmapPortal(commandNode);
         } else {
-            /* problem with the Validatorz */
+            /* problem with the Validator */
             System.exit(-1);
         }
     }
