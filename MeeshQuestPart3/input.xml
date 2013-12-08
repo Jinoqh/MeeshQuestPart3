@@ -1,0 +1,28 @@
+<commands 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="part3in.xsd" 
+pmOrder="3" 
+g="3" 
+spatialWidth="16" 
+spatialHeight="16"> 
+<createCity x="0" radius="5" color="red" name="A" z="1" y="2"/> 
+<createCity x="15" radius="5" color="red" name="B" z="1" y="2"/> 
+<createCity x="5" radius="5" color="red" name="C" z="1" y="2"/> 
+<createCity x="5" radius="5" color="red" name="D" z="1" y="15"/> 
+<!-- PMViolation  -->
+<mapRoad end="A" start="B"/> 
+<mapRoad end="C" start="D"/>
+<!-- Level is empty  -->
+<printPMQuadtree z="1"/>
+<!-- <createCity x="4" radius="5" color="red" name="C" z="1" y="4"/>  -->
+<!-- <createCity x="12" radius="5" color="red" name="D" z="1" y="12"/>  -->
+<!-- <createCity x="4" radius="5" color="red" name="E" z="1" y="12"/>  -->
+<!-- <createCity x="12" radius="5" color="red" name="F" z="1" y="4"/>  -->
+<!-- Should be fine --> 
+<!-- <mapRoad end="C" start="D"/>  -->
+<!-- roadIntersectsAnotherRoad --> 
+<!-- <mapRoad end="E" start="F"/>  -->
+<!-- Making sure it didn't insert --> 
+<!-- <printPMQuadtree z="1"/>  -->
+<!-- <clearAll/>  -->
+</commands>
