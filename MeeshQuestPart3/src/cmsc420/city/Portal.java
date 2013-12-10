@@ -1,9 +1,20 @@
 package cmsc420.city;
 
-public class Portal {
+import java.awt.geom.Point2D;
 
+public class Portal extends City{
+	
 	public Portal(String name, int x, int y, int z) {
-		// TODO Auto-generated constructor stub
+		super(name, x, y, z, 0, null);
 	}
-
+	
+	@Override
+	public int getType(){
+		return POINT;
+	}
+	
+	@Override
+	public String toString(){
+		return "P"+super.toString();
+	}
 }

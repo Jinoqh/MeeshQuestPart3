@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import cmsc420.geom.Inclusive2DIntersectionVerifier;
 import cmsc420.city.City;
 import cmsc420.city.Geometry;
+import cmsc420.city.Portal;
 import cmsc420.city.Road;
 import cmsc420.city.RoadNameComparator;
 
@@ -17,7 +18,7 @@ public abstract class PMQuadtree {
 
 	/** stores all mapped roads in the PM Quadtree */
 	final protected TreeSet<Road> allRoads;
-	
+	protected Portal portal;
 	/** stores how many roads are connected to each city */
 	final protected HashMap<String, Integer> numRoadsForCity;
 	
@@ -259,8 +260,8 @@ public abstract class PMQuadtree {
 			if (index < 0) {
 				geometry.add(-index - 1, g);
 
-				if (g.isCity()) {
-					// g is a city
+				if (g.isCity() || g.isPortal()) {
+					// g is a city or a portal
 					numPoints++;
 				}
 				return true;
@@ -313,6 +314,13 @@ public abstract class PMQuadtree {
 			for (int i = numPoints; i < geometry.size(); i++) {
 				final Geometry g = geometry.get(i);
 				gray = gray.add(g, origin, width, height);
+			}
+			
+			// add portal
+			for(Geometry g : geometry){
+				if(g.isPortal()){
+					gray = gray.add(g, origin, width, height);
+				}
 			}
 			return gray;
 		}
@@ -438,13 +446,12 @@ public abstract class PMQuadtree {
 		 */
 		public Node add(final Geometry g, final Point2D.Float origin,
 				final int width, final int height) throws InvalidPartitionThrowable {
+			
 			for (int i = 0; i < 4; i++) {
-				if (g.isRoad() && Inclusive2DIntersectionVerifier.intersects(
-						((Road)g).toLine2D(),regions[i]) 
-						|| g.isCity() && Inclusive2DIntersectionVerifier.intersects(
-								((City)g).toPoint2D(),regions[i])) {
-					children[i] = children[i].add(g, origins[i], halfWidth,
-							halfHeight);
+				if (g.isRoad() && Inclusive2DIntersectionVerifier.intersects(((Road)g).toLine2D(),regions[i]) 
+						|| g.isCity() && Inclusive2DIntersectionVerifier.intersects(((City)g).toPoint2D(),regions[i])
+						|| g.isPortal() && Inclusive2DIntersectionVerifier.intersects(((Portal)g).toPoint2D(),regions[i])) {
+					children[i] = children[i].add(g, origins[i], halfWidth, halfHeight);
 				}
 			}
 			return this;
@@ -552,6 +559,7 @@ public abstract class PMQuadtree {
 		this.spatialHeight = spatialHeight;
 		spatialOrigin = new Point2D.Float(0.0f, 0.0f);
 		allRoads = new TreeSet<Road>(new RoadNameComparator());
+		portal = null;
 		numRoadsForCity = new HashMap<String, Integer>();
 		this.order = order;
 	}
@@ -569,9 +577,7 @@ public abstract class PMQuadtree {
 		}
 		
 		for (Road r : allRoads) {
-			if (Inclusive2DIntersectionVerifier.intersects(r.toLine2D(),g.toLine2D())) {
-//				System.out.println(Inclusive2DIntersectionVerifier.intersects(g.getStart().toPoint2D(), r.toLine2D()));
-//				System.out.println(Inclusive2DIntersectionVerifier.intersects(g.getEnd().toPoint2D(), r.toLine2D()));			
+			if (Inclusive2DIntersectionVerifier.intersects(r.toLine2D(),g.toLine2D())) {			
 				if (!Inclusive2DIntersectionVerifier.intersects(g.getStart().toPoint2D(), r.toLine2D())
 						&& !Inclusive2DIntersectionVerifier.intersects(g.getEnd().toPoint2D(), r.toLine2D())) {
 					throw new RoadIntersectsAnotherRoadThrowable();
@@ -579,8 +585,7 @@ public abstract class PMQuadtree {
 			}
 		}
 		
-		Rectangle2D.Float world = new Rectangle2D.Float(spatialOrigin.x, spatialOrigin.y, 
-				spatialWidth, spatialHeight);
+		Rectangle2D.Float world = new Rectangle2D.Float(spatialOrigin.x, spatialOrigin.y,spatialWidth, spatialHeight);
 		if (!Inclusive2DIntersectionVerifier.intersects(g.toLine2D(), world)) {
 			throw new OutOfBoundsThrowable();
 		}
@@ -594,6 +599,23 @@ public abstract class PMQuadtree {
 			increaseNumRoadsMap(g.getEnd().getName());
 		}
 
+	}
+	
+	public void addPortal(final Portal p) throws OutOfBoundsThrowable, PortalIntersectsRoadThrowable, InvalidPartitionThrowable{
+		Rectangle2D.Float world = new Rectangle2D.Float(spatialOrigin.x, spatialOrigin.y,spatialWidth, spatialHeight);
+		if(!Inclusive2DIntersectionVerifier.intersects(p.toPoint2D(), world)){
+			throw new OutOfBoundsThrowable();
+		}
+		
+		for (Road r : allRoads) { 
+			if(Inclusive2DIntersectionVerifier.intersects(p.toPoint2D(), r.toLine2D())){
+				throw new PortalIntersectsRoadThrowable();
+			}
+		}
+		
+		root = root.add(p, spatialOrigin, spatialWidth, spatialHeight);
+		portal = p;
+		
 	}
 
 	private void increaseNumRoadsMap(final String name) {

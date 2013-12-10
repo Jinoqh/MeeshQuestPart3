@@ -35,11 +35,14 @@ public abstract class Geometry implements Geometry2D, Comparable<Geometry> {
 	}
 	
 	public boolean isRoad() {
-		return getType() == Geometry2D.SEGMENT;
+		return getType() == SEGMENT;
 	}
 
 	public boolean isCity() {
-		return getType() == Geometry2D.POINT;
+		return getType() == POINT && this instanceof City;
 	}
-
+	
+	public boolean isPortal(){
+		return getType() == POINT && this instanceof Portal;
+	}
 }

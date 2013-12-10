@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cmsc420.city.City;
+import cmsc420.city.Geometry;
+import cmsc420.city.Portal;
 import cmsc420.city.Road;
 import cmsc420.pmquadtree.InvalidPartitionThrowable;
 import cmsc420.pmquadtree.OutOfBoundsThrowable;
@@ -35,12 +37,19 @@ public class Test0 extends TestCase{
  
     @Test
     public void testPM1() {
-    	try {
-			quadtree.addRoad(bc);
-			quadtree.addRoad(ad);
-		} catch (RoadAlreadyExistsThrowable | OutOfBoundsThrowable | InvalidPartitionThrowable | RoadIntersectsAnotherRoadThrowable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//    	try {
+//			quadtree.addRoad(bc);
+//			quadtree.addRoad(ad);
+//		} catch (RoadAlreadyExistsThrowable | OutOfBoundsThrowable | InvalidPartitionThrowable | RoadIntersectsAnotherRoadThrowable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+    }
+    
+    @Test
+    public void testGeometry(){
+    	Geometry g =  new City("A", 0,15,10,"Black");
+    	Geometry g2 = new Portal("B", 0,12, 3);
+
     }
 }

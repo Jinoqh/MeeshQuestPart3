@@ -174,7 +174,7 @@ public class City extends Geometry {
 	 * 
 	 * @return location of this city
 	 */
-	public Point2D toPoint2D() {
+	public Point2D.Float toPoint2D() {
 		return new Point2D.Float(pt.x, pt.y);
 	}
 	

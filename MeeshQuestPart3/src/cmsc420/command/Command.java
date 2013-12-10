@@ -3,6 +3,7 @@ package cmsc420.command;
 import java.awt.Color;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Float;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
@@ -38,8 +39,10 @@ import cmsc420.city.Road;
 import cmsc420.city.RoadAdjacencyList;
 import cmsc420.pmquadtree.InvalidPartitionThrowable;
 import cmsc420.pmquadtree.OutOfBoundsThrowable;
+import cmsc420.pmquadtree.PM1Quadtree;
 import cmsc420.pmquadtree.PM3Quadtree;
 import cmsc420.pmquadtree.PMQuadtree;
+import cmsc420.pmquadtree.PortalIntersectsRoadThrowable;
 import cmsc420.pmquadtree.RoadAlreadyExistsThrowable;
 import cmsc420.pmquadtree.PMQuadtree.Black;
 import cmsc420.pmquadtree.PMQuadtree.Gray;
@@ -73,12 +76,15 @@ public class Command {
 	protected final TreeSet<City> citiesByLocation = new TreeSet<City>(
 			new CityLocationComparator());
 
-	protected final TreeMap<Integer, Portal> portalsByLevel = new TreeMap<Integer, Portal>();
+	
 	private final RoadAdjacencyList roads = new RoadAdjacencyList();
 
 	/** stores mapped cities in a spatial data structure */
 	protected PMQuadtree pmQuadtree;
 
+	protected TreeMap<Integer, PMQuadtree> pmPortalQuadtree;
+	protected final TreeMap<Integer, Portal> portalsByLevel = new TreeMap<Integer, Portal>();
+	
 	/** order of the PM Quadtree */
 	protected int pmOrder;
 
@@ -231,7 +237,12 @@ public class Command {
 		
 		if (pmOrder == 3) {
 			pmQuadtree = new PM3Quadtree(spatialWidth, spatialHeight);
+		} else if (pmOrder == 1) {
+			pmQuadtree = new PM1Quadtree(spatialWidth, spatialHeight);
 		}
+		
+		pmPortalQuadtree = new TreeMap<Integer, PMQuadtree>();
+		
         citiesByName = new GuardedAvlGTree<String, City>(new StringComparator(),
                 Integer.parseInt(node.getAttribute("g")));
 	}
@@ -261,9 +272,9 @@ public class Command {
 		/* create the city */
 		final City city = new City(name, x, y, z, radius, color);
 
-		if (citiesByName.containsKey(name)) {
+		if (citiesByName.containsKey(name) || containsPortalName(name)) {
 			addErrorNode("duplicateCityName", commandNode, parametersNode);
-		} else if (citiesByLocation.contains(city)) {
+		} else if (citiesByLocation.contains(city) || containsPortalCoordinate(city.toPoint2D(), city.getZ())) {
 			addErrorNode("duplicateCityCoordinates", commandNode,
 					parametersNode);
 		} else {
@@ -278,6 +289,31 @@ public class Command {
 		}
 	}
 
+	private boolean containsPortalName(String name){
+		for(Portal portal : portalsByLevel.values()){
+			if(portal.getName().equals(name)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean containsPortalCoordinate(Point2D.Float pt, int z){
+		for(Portal portal : portalsByLevel.values()){
+			if(pt.equals(portal.toPoint2D()) && z == portal.getZ()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean containsCityCoordinate (Point2D.Float pt, int z){
+		for(City city : citiesByLocation){
+			if(city.toPoint2D().equals(pt) && city.getZ() == z)
+				return true;
+		}
+		return false;
+	}
 	/**
 	 * Clears all the data structures do there are not cities or roads in
 	 * existence in the dictionary or on the map.
@@ -370,6 +406,7 @@ public class Command {
 		cityNode.setAttribute("name", city.getName());
 		cityNode.setAttribute("x", Integer.toString((int) city.getX()));
 		cityNode.setAttribute("y", Integer.toString((int) city.getY()));
+		cityNode.setAttribute("z", Integer.toString(((int) city.getZ())));
 		cityNode.setAttribute("radius",
 				Integer.toString((int) city.getRadius()));
 		cityNode.setAttribute("color", city.getColor());
@@ -399,9 +436,9 @@ public class Command {
 		final String start = processStringAttribute(node, "start",
 				parametersNode);
 		final String end = processStringAttribute(node, "end", parametersNode);
-
+		
 		final Element outputNode = results.createElement("output");
-
+		
 		if (!citiesByName.containsKey(start)) {
 			addErrorNode("startPointDoesNotExist", commandNode, parametersNode);
 		} else if (!citiesByName.containsKey(end)) {
@@ -413,23 +450,22 @@ public class Command {
 		}
 		else {
 			try {
+				final Integer z = citiesByName.get(start).getZ();
 				// add to spatial structure
-				pmQuadtree.addRoad(new Road((City) citiesByName.get(start),
-						(City) citiesByName.get(end)));
-				if (Inclusive2DIntersectionVerifier.intersects(citiesByName
-						.get(start).toPoint2D(), new Rectangle2D.Float(0, 0,
-						spatialWidth, spatialHeight))
-						&& Inclusive2DIntersectionVerifier.intersects(
-								citiesByName.get(end).toPoint2D(),
-								new Rectangle2D.Float(0, 0, spatialWidth,
-										spatialHeight))) {
+				if(!pmPortalQuadtree.containsKey(z)){
+					pmPortalQuadtree.put(z, pmOrder == 1 ? new PM1Quadtree(spatialWidth, spatialHeight) : pmOrder == 3 ? new PM3Quadtree(spatialWidth, spatialHeight) : null );
+				}
+				
+//				pmQuadtree.addRoad(new Road((City) citiesByName.get(start),(City) citiesByName.get(end)));
+				pmPortalQuadtree.get(z).addRoad(new Road((City) citiesByName.get(start),(City) citiesByName.get(end)));
+				
+				if (Inclusive2DIntersectionVerifier.intersects(citiesByName.get(start).toPoint2D(), new Rectangle2D.Float(0, 0,spatialWidth, spatialHeight))
+						&& Inclusive2DIntersectionVerifier.intersects(citiesByName.get(end).toPoint2D(),new Rectangle2D.Float(0, 0, spatialWidth,spatialHeight))) {
 					// add to adjacency list
-					roads.addRoad((City) citiesByName.get(start),
-							(City) citiesByName.get(end));
+					roads.addRoad((City) citiesByName.get(start),(City) citiesByName.get(end));
 				}
 				// create roadCreated element
-				final Element roadCreatedNode = results
-						.createElement("roadCreated");
+				final Element roadCreatedNode = results.createElement("roadCreated");
 				roadCreatedNode.setAttribute("start", start);
 				roadCreatedNode.setAttribute("end", end);
 				outputNode.appendChild(roadCreatedNode);
@@ -447,6 +483,49 @@ public class Command {
 		}
 	}
 	
+	public void processMapPortal(Element node) {
+		final Element commandNode = getCommandNode(node);
+		final Element parametersNode = results.createElement("parameters");
+	
+		final String name = processStringAttribute(node, "name", parametersNode);
+		final int x = processIntegerAttribute(node, "x", parametersNode);
+		final int y = processIntegerAttribute(node, "y", parametersNode);
+		final int z = processIntegerAttribute(node, "z", parametersNode);
+		final Element outputNode = results.createElement("output");
+		
+		/* create the city */
+		final Portal portal = new Portal(name, x, y, z);
+	
+		if (portalsByLevel.containsKey(z)) {
+			addErrorNode("redundantPortal", commandNode, parametersNode);
+		}  else if (citiesByName.containsKey(portal.getName()) || containsPortalName(portal.getName())){
+			addErrorNode("duplicatePortalName", commandNode, parametersNode);
+		}  else if (containsPortalCoordinate(portal.toPoint2D(), portal.getZ()) || containsCityCoordinate(portal.toPoint2D(), portal.getZ())){
+			addErrorNode("duplicatePortalCoordinates", commandNode, parametersNode);
+		} else {
+			try {
+				if(!pmPortalQuadtree.containsKey(z)){
+					pmPortalQuadtree.put(z, pmOrder == 1 ? new PM1Quadtree(spatialWidth, spatialHeight) : pmOrder == 3 ? new PM3Quadtree(spatialWidth, spatialHeight) : null );
+				}
+//				pmQuadtree.addPortal(portal);
+				pmPortalQuadtree.get(z).addPortal(portal);
+				portalsByLevel.put(portal.getZ(), portal);
+
+				// add success node to results
+				addSuccessNode(commandNode, parametersNode, outputNode);
+			} catch (OutOfBoundsThrowable e){
+				addErrorNode("portalOutOfBoundsNode", commandNode, parametersNode);
+			} catch (PortalIntersectsRoadThrowable e) {
+				addErrorNode("portalIntersectsRoad", commandNode, parametersNode);
+			} catch (InvalidPartitionThrowable e) {
+				addErrorNode("portalViolatesPMRules", commandNode, parametersNode);
+			} 
+			
+		}
+		
+		
+	}
+
 	public void processPrintAvlTree(Element node) {
         final Element commandNode = getCommandNode(node);
         final Element parametersNode = results.createElement("parameters");
@@ -706,15 +785,16 @@ public class Command {
 		final Element commandNode = getCommandNode(node);
 		final Element parametersNode = results.createElement("parameters");
 		final Element outputNode = results.createElement("output");
-
-		if (pmQuadtree.isEmpty()) {
+		final int z = processIntegerAttribute(node, "z", parametersNode);
+		
+		if (pmPortalQuadtree.get(z).isEmpty()){
 			/* empty PR Quadtree */
 			addErrorNode("mapIsEmpty", commandNode, parametersNode);
 		} else {
 			/* print PR Quadtree */
 			final Element quadtreeNode = results.createElement("quadtree");
 			quadtreeNode.setAttribute("order", Integer.toString(pmOrder));
-			printPMQuadtreeHelper(pmQuadtree.getRoot(), quadtreeNode);
+			printPMQuadtreeHelper(pmPortalQuadtree.get(z).getRoot(), quadtreeNode);
 
 			outputNode.appendChild(quadtreeNode);
 
@@ -743,12 +823,21 @@ public class Command {
 			blackNode.setAttribute("cardinality",
 					Integer.toString(currentLeaf.getGeometry().size()));
 			for (Geometry g : currentLeaf.getGeometry()) {
-				if (g.isCity()) {
+				if (g.isPortal()) {
+					Portal p = (Portal) g;
+					Element portal = results.createElement("portal");
+					portal.setAttribute("name", p.getName());
+					portal.setAttribute("x", Integer.toString(p.getX()));
+					portal.setAttribute("y", Integer.toString(p.getY()));
+					portal.setAttribute("z", Integer.toString(p.getZ()));
+					blackNode.appendChild(portal);
+				} else if (g.isCity()) {
 					City c = (City) g;
 					Element city = results.createElement("city");
 					city.setAttribute("name", c.getName());
 					city.setAttribute("x", Integer.toString((int) c.getX()));
 					city.setAttribute("y", Integer.toString((int) c.getY()));
+					city.setAttribute("z", Integer.toString(c.getZ()));
 					city.setAttribute("radius",
 							Integer.toString((int) c.getRadius()));
 					city.setAttribute("color", c.getColor());
@@ -1168,32 +1257,6 @@ public class Command {
 			}
 			return (distance < o.distance) ? -1 : 1;
 		}
-	}
-
-	public void processMapPortal(Element node) {
-		final Element commandNode = getCommandNode(node);
-		final Element parametersNode = results.createElement("parameters");
-
-		final String name = processStringAttribute(node, "name", parametersNode);
-		final int x = processIntegerAttribute(node, "x", parametersNode);
-		final int y = processIntegerAttribute(node, "y", parametersNode);
-		final int z = processIntegerAttribute(node, "z", parametersNode);
-
-		/* create the city */
-		final Portal portal = new Portal(name, x, y, z);
-
-		if (portalsByLevel.containsKey(z)) {
-			addErrorNode("duplicateCityName", commandNode, parametersNode);
-		}  else {
-			final Element outputNode = results.createElement("output");
-
-			/* add city to dictionary */
-			portalsByLevel.put(z, portal);
-
-			/* add success node to results */
-			addSuccessNode(commandNode, parametersNode, outputNode);
-		}
-		
 	}
 
 	public void processUnmapPortal(Element commandNode) {

@@ -20,6 +20,7 @@ public class Road extends Geometry {
 	/** distance from start city to end city */
 	protected double distance;
 	
+	protected int z;
 	/**
 	 * Constructs a new road based on start city and end city. Calculates and
 	 * stores the distance between them.
@@ -149,5 +150,9 @@ public class Road extends Geometry {
 	@Override
 	public int getType() {
 		return SEGMENT;
+	}
+	
+	public int getZ(){
+		return start.getZ();
 	}
 }
