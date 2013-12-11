@@ -17,4 +17,15 @@ public class Portal extends City{
 	public String toString(){
 		return "P"+super.toString();
 	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == this)
+			return true;
+		if (obj != null && (obj.getClass().equals(this.getClass()))) {
+			Portal p = (Portal) obj;
+			return (pt.equals(p.pt) && z == p.z && name.equals(p.name));
+		}
+		return false;
+	}
 }

@@ -48,8 +48,13 @@ public class Test0 extends TestCase{
     
     @Test
     public void testGeometry(){
-    	Geometry g =  new City("A", 0,15,10,"Black");
+    	Geometry g =  new Portal("A", 0,15,10);
     	Geometry g2 = new Portal("B", 0,12, 3);
-
+    	Geometry g3 = g2;
+    	System.out.println(g.equals(g2));
+    	System.out.println(g2.equals(g3));
+    	
     }
+    
+    
 }

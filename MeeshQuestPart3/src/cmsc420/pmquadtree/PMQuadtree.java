@@ -257,7 +257,9 @@ public abstract class PMQuadtree {
 		
 		public Node remove(final Geometry g, final Point2D.Float origin,
 				final int width, final int height){
-			if(g.isRoad()){
+			if(g.isPortal()){
+				geometry.remove((Portal)g);
+			} else if(g.isRoad()){
 				geometry.remove((Road) g);
 				geometry.remove(((Road)g).getStart());
 				geometry.remove(((Road)g).getEnd());
@@ -708,6 +710,14 @@ public abstract class PMQuadtree {
 		
 	}
 
+	public void removePortal(Portal p) throws RoadNotMappedThrowable, PortalNotMappedThrowable {
+		if (portal == null){
+			throw new PortalNotMappedThrowable();
+		}
+		root = root.remove(p, spatialOrigin, spatialWidth, spatialHeight);
+		portal = null;
+	}
+
 	private void increaseNumRoadsMap(final String name) {
 		Integer numRoads = numRoadsForCity.get(name);
 		if (numRoads != null) {
@@ -747,5 +757,13 @@ public abstract class PMQuadtree {
 	
 	public int getNumRoads() {
 		return allRoads.size();
+	}
+	
+	public boolean containsPortal(){
+		return portal != null;
+	} 
+	
+	public Portal getPortal(){
+		return portal;
 	}
 }
