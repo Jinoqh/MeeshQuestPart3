@@ -177,6 +177,10 @@ public class MeeshQuest {
         	command.processMapPortal(commandNode);
         } else if (name.equals("unmapPortal")){
         	command.processUnmapPortal(commandNode);
+        } else if (name.equals("deleteCity")){
+        	command.processDeleteCity(commandNode);
+        } else if (name.equals("unmapRoad")){
+        	command.processUnmapRoad(commandNode);
         } else {
             /* problem with the Validator */
             System.exit(-1);

@@ -97,6 +97,11 @@ public abstract class PMQuadtree {
 			throw new UnsupportedOperationException();
 		}
 
+		public Node remove(final Geometry g, final Point2D.Float origin,
+				final int width, final int height) throws RoadNotMappedThrowable{
+			throw new UnsupportedOperationException();
+		}
+		
 		/**
 		 * Returns if this node follows the rules of the PM Quadtree.
 		 * 
@@ -143,6 +148,10 @@ public abstract class PMQuadtree {
 			return blackNode.add(g, origin, width, height);
 		}
 
+		public Node remove(final Geometry g, final Point2D.Float origin,
+				final int width, final int height) throws RoadNotMappedThrowable{
+			throw new RoadNotMappedThrowable();
+		}
 		/**
 		 * Returns if this node follows the rules of the PM Quadtree.
 		 * 
@@ -245,6 +254,20 @@ public abstract class PMQuadtree {
 				return partition(origin, width, height);
 			}
 		}
+		
+		public Node remove(final Geometry g, final Point2D.Float origin,
+				final int width, final int height){
+			if(g.isRoad()){
+				geometry.remove((Road) g);
+				geometry.remove(((Road)g).getStart());
+				geometry.remove(((Road)g).getEnd());
+			} 
+			if(geometry.isEmpty()){
+				return white; 	
+			} else {
+				return this;
+			}
+		}
 
 		/**
 		 * Adds a road to this node's geometry list.
@@ -305,7 +328,7 @@ public abstract class PMQuadtree {
 		 *             if two roads intersect
 		 */
 		private Node partition(final Point2D.Float origin, final int width, final int height) throws InvalidPartitionThrowable  {
-			if(width / 2 <= 1 || height / 2 <= 1)
+			if(width <= 1 || height <= 1)
 				throw new InvalidPartitionThrowable("PMViolation");
 			/* create new gray node */
 			Node gray = new Gray(origin, width, height);
@@ -457,6 +480,62 @@ public abstract class PMQuadtree {
 			return this;
 		}
 
+		public Node remove(final Geometry g, final Point2D.Float origin,
+				final int width, final int height) throws RoadNotMappedThrowable{
+			for (int i = 0; i < 4; i++){
+				if (g.isRoad() && Inclusive2DIntersectionVerifier.intersects(((Road)g).toLine2D(),regions[i]) 
+						|| g.isCity() && Inclusive2DIntersectionVerifier.intersects(((City)g).toPoint2D(),regions[i])
+						|| g.isPortal() && Inclusive2DIntersectionVerifier.intersects(((Portal)g).toPoint2D(),regions[i])) {
+					children[i] = children[i].remove(g, origins[i], halfWidth, halfHeight);
+				}
+			}
+			
+			int numWhite, numBlack, numGray;
+			numWhite = numBlack = numGray = 0;
+			for(int i = 0; i < 4; i++){
+				switch(children[i].getType()){
+					case(WHITE): numWhite++; break;
+					case(BLACK): numBlack++; break;
+					case(GRAY): numGray++; break;
+				}
+			}
+			
+			if(numWhite == 4){
+				return white;
+			}
+			
+			if(numBlack == 1 && numWhite == 3){
+				return getBlackChild();
+			}
+			
+			if(numGray < 4){
+				Black b = new Black();
+				for(int i = 0; i < 4; i++){
+					if(children[i].getType() == BLACK){
+						for(Geometry geometry : (((Black) children[i]).geometry)){
+							b.addGeometryToList(geometry);
+						}
+					}
+				}
+				if(b.isValid()){
+					return b;
+				} else {
+					return this;
+				}
+			} else {
+				return this;
+			}
+		}
+		
+		private Black getBlackChild() {
+			for(int i = 0; i < 4; i++){
+				if(children[i].getType() == BLACK){
+					return (Black) children[i];
+				}
+			}
+			return null;
+		}
+		
 		/**
 		 * Returns if this node follows the rules of the PM Quadtree.
 		 * 
@@ -566,6 +645,17 @@ public abstract class PMQuadtree {
 
 	public Node getRoot() {
 		return root;
+	}
+	
+	public void removeRoad(final Road g) throws RoadNotMappedThrowable{
+		final Road g2 = new Road(g.getEnd(), g.getStart());
+		
+		if (!allRoads.contains(g) && !allRoads.contains(g2)){
+			throw new RoadNotMappedThrowable();
+		}
+		
+		root = root.remove(g, spatialOrigin, spatialWidth, spatialHeight);
+		allRoads.remove(g);
 	}
 	
 	public void addRoad(final Road g) 

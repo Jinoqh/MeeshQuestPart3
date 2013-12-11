@@ -165,6 +165,7 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
         Comparator<? super K> comparator;
         private int leftHeight;
         private int rightHeight;
+        private boolean trash;
 
         AvlNode(K key, V value, Comparator<? super K> comp) {
             this.key = key;
@@ -173,6 +174,7 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
             this.comparator = comp;
             this.leftHeight = 0;
             this.rightHeight = 0;
+            this.trash = false;
         }
 
         public V add(AvlNode<K, V> node) {

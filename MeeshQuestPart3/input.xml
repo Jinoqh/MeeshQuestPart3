@@ -1,16 +1,18 @@
-<commands xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="part3in.xsd" spatialWidth="8" spatialHeight="8" pmOrder="1" g="1">
-<!--  setup  -->
-<createCity name="A" x="2" y="2" z="1" radius="5" color="black"/>
-<createCity name="B" x="2" y="6" z="1" radius="5" color="black"/>
-<createCity name="C" x="6" y="6" z="1" radius="5" color="black"/>
-<createCity name="D" x="6" y="2" z="1" radius="5" color="black"/>
-<createCity name="E" x="4" y="4" z="1" radius="5" color="black"/>
-<mapRoad start="A" end="B"/>
-<mapRoad start="C" end="B"/>
-<mapRoad start="C" end="D"/>
-<mapRoad start="A" end="D"/>
-<mapRoad start="A" end="E"/>
-<mapRoad start="E" end="B"/>
-<mapRoad start="C" end="E"/>
-<mapRoad start="E" end="D"/>
+<commands 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="part3In.xsd" 
+spatialWidth="16" 
+spatialHeight="16" 
+pmOrder="1" 
+g="1"> 
+<createCity x="5" radius="5" color="red" name="A" z="1" y="2"/> 
+<createCity x="14" radius="5" color="red" name="B" z="1" y="9"/> 
+<createCity x="9" radius="5" color="red" name="C" z="1" y="3"/> 
+<createCity x="15" radius="5" color="red" name="D" z="1" y="5"/> 
+<mapPortal x="13" name="Z" z="1" y="2"/> 
+<mapRoad end="A" start="B"/> 
+<mapRoad end="C" start="D"/> 
+<printPMQuadtree z="1"/> 
+<unmapRoad end="C" start="D"/> 
+<printPMQuadtree z="1"/> 
 </commands>

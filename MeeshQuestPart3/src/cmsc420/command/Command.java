@@ -48,6 +48,7 @@ import cmsc420.pmquadtree.PMQuadtree.Black;
 import cmsc420.pmquadtree.PMQuadtree.Gray;
 import cmsc420.pmquadtree.PMQuadtree.Node;
 import cmsc420.pmquadtree.RoadIntersectsAnotherRoadThrowable;
+import cmsc420.pmquadtree.RoadNotMappedThrowable;
 import cmsc420.sortedmap.GuardedAvlGTree;
 import cmsc420.sortedmap.StringComparator;
 import cmsc420.xml.XmlUtility;
@@ -330,15 +331,15 @@ public class Command {
 		citiesByName.clear();
 		citiesByLocation.clear();
 		pmQuadtree.clear();
+		pmPortalQuadtree.clear();
 		roads.clear();
-
+		addSuccessNode(commandNode, parametersNode, outputNode);
 		/* clear canvas */
 		// canvas.clear();
 		/* add a rectangle to show where the bounds of the map are located */
 		// canvas.addRectangle(0, 0, spatialWidth, spatialHeight, Color.BLACK,
 		// false);
 		/* add success node to results */
-		addSuccessNode(commandNode, parametersNode, outputNode);
 	}
 
 	/**
@@ -520,10 +521,7 @@ public class Command {
 			} catch (InvalidPartitionThrowable e) {
 				addErrorNode("portalViolatesPMRules", commandNode, parametersNode);
 			} 
-			
 		}
-		
-		
 	}
 
 	public void processPrintAvlTree(Element node) {
@@ -717,23 +715,23 @@ public class Command {
 	public void processSaveMap(final Element node) throws IOException {
 		final Element commandNode = getCommandNode(node);
 		final Element parametersNode = results.createElement("parameters");
-
+		final int z = processIntegerAttribute(node, "z", parametersNode);
 		final String name = processStringAttribute(node, "name", parametersNode);
 
 		final Element outputNode = results.createElement("output");
 
-		CanvasPlus canvas = drawPMQuadtree();
+		CanvasPlus canvas = drawPMQuadtree(z);
 
 		/* save canvas to '(name).png' */
 		canvas.save(name);
 
-		canvas.dispose();
+//		canvas.dispose();
 
 		/* add success node to results */
 		addSuccessNode(commandNode, parametersNode, outputNode);
 	}
 
-	private CanvasPlus drawPMQuadtree() {
+	private CanvasPlus drawPMQuadtree(int z) {
 		final CanvasPlus canvas = new CanvasPlus("MeeshQuest");
 
 		/* initialize canvas */
@@ -744,7 +742,8 @@ public class Command {
 				false);
 
 		/* draw PM Quadtree */
-		drawPMQuadtreeHelper(pmQuadtree.getRoot(), canvas);
+//		drawPMQuadtreeHelper(pmQuadtree.getRoot(), canvas);
+		drawPMQuadtreeHelper(pmPortalQuadtree.get(z).getRoot(), canvas);
 
 		return canvas;
 	}
@@ -753,15 +752,15 @@ public class Command {
 		if (node.getType() == Node.BLACK) {
 			Black blackNode = (Black) node;
 			for (Geometry g : blackNode.getGeometry()) {
-				if (g.isCity()) {
+				if (g.isPortal()){
+					Portal portal = (Portal) g;
+					canvas.addPoint(portal.getName(), portal.getX(), portal.getY(), Color.red);
+				} else if (g.isCity()) {
 					City city = (City) g;
-					canvas.addPoint(city.getName(), city.getX(), city.getY(),
-							Color.BLACK);
+					canvas.addPoint(city.getName(), city.getX(), city.getY(), Color.BLACK);
 				} else {
 					Road road = (Road) g;
-					canvas.addLine(road.getStart().getX(), road.getStart()
-							.getY(), road.getEnd().getX(),
-							road.getEnd().getY(), Color.BLACK);
+					canvas.addLine(road.getStart().getX(), road.getStart().getY(), road.getEnd().getX(),road.getEnd().getY(), Color.BLACK);
 				}
 			}
 		} else if (node.getType() == Node.GRAY) {
@@ -789,7 +788,7 @@ public class Command {
 		
 		if (pmPortalQuadtree.get(z).isEmpty()){
 			/* empty PR Quadtree */
-			addErrorNode("mapIsEmpty", commandNode, parametersNode);
+			addErrorNode("levelIsEmpty", commandNode, parametersNode);
 		} else {
 			/* print PR Quadtree */
 			final Element quadtreeNode = results.createElement("quadtree");
@@ -880,6 +879,7 @@ public class Command {
 
 		final int x = processIntegerAttribute(node, "x", parametersNode);
 		final int y = processIntegerAttribute(node, "y", parametersNode);
+		final int z = processIntegerAttribute(node, "z", parametersNode);
 		final int radius = processIntegerAttribute(node, "radius",
 				parametersNode);
 
@@ -912,7 +912,7 @@ public class Command {
 
 				if (pathFile.compareTo("") != 0) {
 					/* save canvas to file with range circle */
-					CanvasPlus canvas = drawPMQuadtree();
+					CanvasPlus canvas = drawPMQuadtree(z);
 					canvas.addCircle(x, y, radius, Color.BLUE, false);
 					canvas.save(pathFile);
 					canvas.dispose();
@@ -928,6 +928,7 @@ public class Command {
 
 		final int x = processIntegerAttribute(node, "x", parametersNode);
 		final int y = processIntegerAttribute(node, "y", parametersNode);
+		final int z = processIntegerAttribute(node, "z", parametersNode);
 		final int radius = processIntegerAttribute(node, "radius",
 				parametersNode);
 
@@ -959,7 +960,7 @@ public class Command {
 
 				if (pathFile.compareTo("") != 0) {
 					/* save canvas to file with range circle */
-					CanvasPlus canvas = drawPMQuadtree();
+					CanvasPlus canvas = drawPMQuadtree(z);
 					canvas.addCircle(x, y, radius, Color.BLUE, false);
 					canvas.save(pathFile);
 					canvas.dispose();
@@ -1259,8 +1260,80 @@ public class Command {
 		}
 	}
 
-	public void processUnmapPortal(Element commandNode) {
-		// TODO Auto-generated method stub
+	public void processUnmapPortal(Element node) {
+//		final Element commandNode = getCommandNode(node);
+//		final Element parametersNode = results.createElement("parameters");
+//
+//		final String name = processStringAttribute(node, "name", parametersNode);
+//
+//		if (!portalsByLevel.get(key))) {
+//			addErrorNode("startPointDoesNotExist", commandNode, parametersNode);
+//		} else {
+//			try {
+//				final Integer z = citiesByName.get(start).getZ();
+//				final Element outputNode = results.createElement("output");
+//				final Element roadDeletedNode = results.createElement("roadDeleted");
+//				Road r = new Road((City) citiesByName.get(start), (City) citiesByName.get(end));
+//				pmPortalQuadtree.get(z).removeRoad(new Road((City) citiesByName.get(start), (City) citiesByName.get(end)));
+//				
+//				roadDeletedNode.setAttribute("start", start);
+//				roadDeletedNode.setAttribute("end", end);
+//				
+//				outputNode.appendChild(roadDeletedNode);
+//				addSuccessNode(commandNode, parametersNode, outputNode);
+//				
+//			} catch (RoadNotMappedThrowable e){
+//				addErrorNode("roadNotMapped", commandNode, parametersNode);
+//			}
+//		}
+	}
+	
+	public void processUnmapRoad(Element node) {
+		final Element commandNode = getCommandNode(node);
+		final Element parametersNode = results.createElement("parameters");
+
+		final String start = processStringAttribute(node, "start", parametersNode);
+		final String end = processStringAttribute(node, "end", parametersNode);
+
+		if (!citiesByName.containsKey(start)) {
+			addErrorNode("startPointDoesNotExist", commandNode, parametersNode);
+		} else if (!citiesByName.containsKey(end)) {
+			addErrorNode("endPointDoesNotExist", commandNode, parametersNode);
+		} else if (start.equals(end)) {
+			addErrorNode("startEqualsEnd", commandNode, parametersNode);
+		} else {
+			try {
+				final Integer z = citiesByName.get(start).getZ();
+				final Element outputNode = results.createElement("output");
+				final Element roadDeletedNode = results.createElement("roadDeleted");
+				Road r = new Road((City) citiesByName.get(start), (City) citiesByName.get(end));
+				pmPortalQuadtree.get(z).removeRoad(new Road((City) citiesByName.get(start), (City) citiesByName.get(end)));
+				
+				roadDeletedNode.setAttribute("start", start);
+				roadDeletedNode.setAttribute("end", end);
+				
+				outputNode.appendChild(roadDeletedNode);
+				addSuccessNode(commandNode, parametersNode, outputNode);
+				
+			} catch (RoadNotMappedThrowable e){
+				addErrorNode("roadNotMapped", commandNode, parametersNode);
+			}
+		}
+	}
+
+	public void processDeleteCity(Element node) {
+		final Element commandNode = getCommandNode(node);
+		final Element parametersNode = results.createElement("parameters");
+
+		final String name = processStringAttribute(node, "name", parametersNode);
+		final Element outputNode = results.createElement("output");
 		
+		
+		/* create the city */
+		
+
+		if (citiesByName.containsKey(name) || containsPortalName(name)) {
+			addErrorNode("duplicateCityName", commandNode, parametersNode);
+		} 
 	}
 }
