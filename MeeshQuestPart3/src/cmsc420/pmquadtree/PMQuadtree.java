@@ -745,8 +745,8 @@ public abstract class PMQuadtree {
 		portal = null;
 	}
 
-	public void removeCity(City c) throws CityNotMappedThrowable, RoadNotMappedThrowable {	
-		LinkedList<Road> removedRoads = new LinkedList<Road>();
+	public TreeSet<Road> removeCity(City c) throws CityNotMappedThrowable, RoadNotMappedThrowable {	
+		TreeSet<Road> removedRoads = new TreeSet<Road>(new RoadNameComparator());
 		for(Road r : allRoads){ 
 			if(c.equals(r.getStart()) || c.equals(r.getEnd())){
 				decreaseNumRoadsMap(r.getEnd().getName());
@@ -764,6 +764,8 @@ public abstract class PMQuadtree {
 		for(Road r : removedRoads){
 			allRoads.remove(r);
 		}
+		
+		return removedRoads;
 	}
 	
 	private void increaseNumRoadsMap(final String name) {

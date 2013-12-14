@@ -8,6 +8,10 @@ public class Portal extends City{
 		super(name, x, y, z, 0, null);
 	}
 	
+	public Portal(Portal p){
+		this(p.name, p.getX(), p.getY(), p.getZ());
+	}
+	
 	@Override
 	public int getType(){
 		return POINT;

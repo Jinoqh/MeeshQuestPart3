@@ -68,7 +68,8 @@ public class City extends Geometry {
 		this.radius = city.radius;
 		this.color = city.color;
 	}
-
+	
+	
 	/**
 	 * Gets the name of this city.
 	 * 

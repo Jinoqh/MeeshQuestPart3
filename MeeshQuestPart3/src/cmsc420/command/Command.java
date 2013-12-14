@@ -1274,8 +1274,9 @@ public class Command {
 		} else {
 			try {
 				final Element outputNode = results.createElement("output");
-				Portal p = allPortals.get(name);
+				Portal p = new Portal(allPortals.get(name));
 				pmPortalQuadtree.get(p.getZ()).removePortal(p);
+				allPortals.remove(name);
 				addSuccessNode(commandNode, parametersNode, outputNode);
 			} catch (PortalNotMappedThrowable | RoadNotMappedThrowable e){
 				addErrorNode("portalDoesNotExist", commandNode, parametersNode);
@@ -1302,7 +1303,7 @@ public class Command {
 				final Element outputNode = results.createElement("output");
 				final Element roadDeletedNode = results.createElement("roadDeleted");
 				Road r = new Road((City) citiesByName.get(start), (City) citiesByName.get(end));
-				pmPortalQuadtree.get(z).removeRoad(new Road((City) citiesByName.get(start), (City) citiesByName.get(end)));
+				pmPortalQuadtree.get(z).removeRoad(r);
 				
 				roadDeletedNode.setAttribute("start", start);
 				roadDeletedNode.setAttribute("end", end);
@@ -1331,7 +1332,25 @@ public class Command {
 			final int z = city.getZ();
 			
 			try {
-				pmPortalQuadtree.get(z).removeCity(city);
+				
+				TreeSet<Road> removedRoads = pmPortalQuadtree.get(z).removeCity(city);
+				
+				Element cityUnmappedNode = results.createElement("cityUnmapped");
+				cityUnmappedNode.setAttribute("color", city.getColor());
+				cityUnmappedNode.setAttribute("name", city.getName());
+				cityUnmappedNode.setAttribute("radius", String.valueOf(city.getRadius()));
+				cityUnmappedNode.setAttribute("x", String.valueOf(city.getX()));
+				cityUnmappedNode.setAttribute("y", String.valueOf(city.getY()));
+				cityUnmappedNode.setAttribute("z", String.valueOf(city.getZ()));
+				outputNode.appendChild(cityUnmappedNode);
+				
+				for(Road r : removedRoads){
+					Element roadUnmappedNode = results.createElement("roadUnmapped");
+					roadUnmappedNode.setAttribute("end", r.getEnd().getName());
+					roadUnmappedNode.setAttribute("start", r.getStart().getName());
+					outputNode.appendChild(roadUnmappedNode);
+				}
+				
 				addSuccessNode(commandNode, parametersNode, outputNode);
 			} catch (CityNotMappedThrowable e) {
 				// TODO Auto-generated catch block
