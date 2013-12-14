@@ -14,6 +14,7 @@ import cmsc420.pmquadtree.PM1Quadtree;
 import cmsc420.pmquadtree.PMQuadtree;
 import cmsc420.pmquadtree.RoadAlreadyExistsThrowable;
 import cmsc420.pmquadtree.RoadIntersectsAnotherRoadThrowable;
+import cmsc420.sortedmap.GuardedAvlGTree;
 import junit.framework.TestCase;
 
 public class Test0 extends TestCase{
@@ -48,13 +49,26 @@ public class Test0 extends TestCase{
     
     @Test
     public void testGeometry(){
-    	Geometry g =  new Portal("A", 0,15,10);
-    	Geometry g2 = new Portal("B", 0,12, 3);
-    	Geometry g3 = g2;
-    	System.out.println(g.equals(g2));
-    	System.out.println(g2.equals(g3));
+//    	Geometry g =  new Portal("A", 0,15,10);
+//    	Geometry g2 = new Portal("B", 0,12, 3);
+//    	Geometry g3 = g2;
+//    	System.out.println(g.equals(g2));
+//    	System.out.println(g2.equals(g3));
     	
     }
     
+    
+    @Test
+    public void testGuarded(){
+    	int x = 3;
+    	
+    	if(x == 3){
+    		System.out.println("YOLO");
+    	} else if (x == 3){
+    		System.out.println("TROLLOR");
+    	}
+    }
+    
+ 
     
 }

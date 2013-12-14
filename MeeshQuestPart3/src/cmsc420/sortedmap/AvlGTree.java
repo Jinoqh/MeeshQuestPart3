@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.TreeSet;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -46,6 +47,11 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
     public AvlGTree(final Comparator<? super K> comp, final int g) {
         this.comparator = comp;
         this.g = g;
+    }
+    
+    public void sweep(){
+    	Set<Entry<K,V>> set = new TreeSet<Entry<K,V>>(this.entrySet());
+    	this.clear();
     }
 
     public Comparator<? super K> comparator() {
@@ -118,7 +124,17 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
     }
 
     public V remove(Object key) {
-        throw new UnsupportedOperationException();
+    	if(key == null)
+    		throw new NullPointerException();
+    	
+    	AvlNode<K,V> node = getNode(key);
+    	
+    	if(node == null)
+    		return null;
+    	
+    	node.markAsTrash();
+    	
+    	return node.getValue();
     }
 
     public K firstKey() {
@@ -251,6 +267,14 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
         public boolean isLeaf() {
             return left == null && right == null;
         }
+        
+        public boolean isTrash(){
+        	return trash;
+        }
+        
+        public void markAsTrash(){
+        	this.trash = true;
+        }
 
         @SuppressWarnings({ "unchecked" })
         private int compare(Object k1, Object k2) {
@@ -287,7 +311,7 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
             else if (cmp > 0)
                 p = p.right;
             else
-                return p;
+                return p.isTrash() ? null : p;
         }
         return null;
     }

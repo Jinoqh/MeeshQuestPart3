@@ -37,6 +37,7 @@ import cmsc420.city.Geometry;
 import cmsc420.city.Portal;
 import cmsc420.city.Road;
 import cmsc420.city.RoadAdjacencyList;
+import cmsc420.pmquadtree.CityNotMappedThrowable;
 import cmsc420.pmquadtree.InvalidPartitionThrowable;
 import cmsc420.pmquadtree.OutOfBoundsThrowable;
 import cmsc420.pmquadtree.PM1Quadtree;
@@ -1321,13 +1322,24 @@ public class Command {
 
 		final String name = processStringAttribute(node, "name", parametersNode);
 		final Element outputNode = results.createElement("output");
+	
 		
-		
-		/* create the city */
-		
-
-		if (citiesByName.containsKey(name) || containsPortalName(name)) {
-			addErrorNode("duplicateCityName", commandNode, parametersNode);
-		} 
+		if (!citiesByName.containsKey(name)){
+			addErrorNode("CityDoesNotExist", commandNode, parametersNode);
+		} else {
+			City city = citiesByName.get(name);
+			final int z = city.getZ();
+			
+			try {
+				pmPortalQuadtree.get(z).removeCity(city);
+				addSuccessNode(commandNode, parametersNode, outputNode);
+			} catch (CityNotMappedThrowable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RoadNotMappedThrowable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
