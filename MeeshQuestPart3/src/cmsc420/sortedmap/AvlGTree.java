@@ -50,8 +50,11 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
     }
     
     public void sweep(){
-    	Set<Entry<K,V>> set = new TreeSet<Entry<K,V>>(this.entrySet());
-    	this.clear();
+    	
+    	for(Entry<K,V> entry : this.entrySet){
+    		
+    	}
+    	
     }
 
     public Comparator<? super K> comparator() {
@@ -133,7 +136,7 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
     		return null;
     	
     	node.markAsTrash();
-    	
+    	size--;
     	return node.getValue();
     }
 

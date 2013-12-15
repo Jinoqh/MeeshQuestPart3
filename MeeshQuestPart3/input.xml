@@ -24,8 +24,7 @@ spatialHeight="16">
 <printPMQuadtree z="1"/> 
 <mapPortal x="8" name="Z" z="1" y="6"/> 
 <printPMQuadtree z="1"/> 
-<deleteCity name="A"/> <!-- <saveMap name="image.png" z="1" /> -->
-
+<deleteCity name="A"/> 
 <printPMQuadtree z="1"/> 
 <unmapRoad end="D" start="E"/> 
 <printPMQuadtree z="1"/> 

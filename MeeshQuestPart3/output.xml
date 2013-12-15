@@ -993,14 +993,46 @@
               <road end="E" start="C"/>
             </black>
           </gray>
-          <black cardinality="1">
+          <black cardinality="2">
+            <portal name="Z" x="8" y="6" z="1"/>
             <road end="D" start="B"/>
           </black>
-          <black cardinality="3">
-            <city color="red" name="B" radius="5" x="12" y="4" z="1"/>
-            <road end="C" start="B"/>
-            <road end="D" start="B"/>
-          </black>
+          <gray x="12" y="4">
+            <gray x="10" y="6">
+              <black cardinality="2">
+                <portal name="Z" x="8" y="6" z="1"/>
+                <road end="D" start="B"/>
+              </black>
+              <black cardinality="2">
+                <road end="C" start="B"/>
+                <road end="D" start="B"/>
+              </black>
+              <black cardinality="2">
+                <portal name="Z" x="8" y="6" z="1"/>
+                <road end="D" start="B"/>
+              </black>
+              <black cardinality="3">
+                <city color="red" name="B" radius="5" x="12" y="4" z="1"/>
+                <road end="C" start="B"/>
+                <road end="D" start="B"/>
+              </black>
+            </gray>
+            <black cardinality="3">
+              <city color="red" name="B" radius="5" x="12" y="4" z="1"/>
+              <road end="C" start="B"/>
+              <road end="D" start="B"/>
+            </black>
+            <black cardinality="3">
+              <city color="red" name="B" radius="5" x="12" y="4" z="1"/>
+              <road end="C" start="B"/>
+              <road end="D" start="B"/>
+            </black>
+            <black cardinality="3">
+              <city color="red" name="B" radius="5" x="12" y="4" z="1"/>
+              <road end="C" start="B"/>
+              <road end="D" start="B"/>
+            </black>
+          </gray>
         </gray>
       </quadtree>
     </output>
@@ -1102,14 +1134,10 @@
               <road end="E" start="C"/>
             </black>
           </gray>
-          <gray x="4" y="4">
-            <white/>
-            <black cardinality="1">
-              <portal name="z" x="8" y="6" z="1"/>
-            </black>
-            <white/>
-            <white/>
-          </gray>
+          <black cardinality="2">
+            <portal name="z" x="8" y="6" z="1"/>
+            <road end="D" start="B"/>
+          </black>
           <gray x="12" y="4">
             <gray x="10" y="6">
               <black cardinality="2">
@@ -1179,14 +1207,10 @@
             <road end="D" start="B"/>
             <road end="D" start="C"/>
           </black>
-          <gray x="4" y="4">
-            <white/>
-            <black cardinality="1">
-              <portal name="z" x="8" y="6" z="1"/>
-            </black>
-            <white/>
-            <white/>
-          </gray>
+          <black cardinality="2">
+            <portal name="z" x="8" y="6" z="1"/>
+            <road end="D" start="B"/>
+          </black>
           <gray x="12" y="4">
             <gray x="10" y="6">
               <black cardinality="2">
@@ -1264,7 +1288,7 @@
       </quadtree>
     </output>
   </success>
-  <error type="roadNotMapped">
+  <error type="startPointDoesNotExist">
     <command name="unmapRoad"/>
     <parameters>
       <start value="B"/>

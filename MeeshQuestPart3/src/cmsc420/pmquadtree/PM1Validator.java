@@ -12,6 +12,11 @@ public class PM1Validator implements Validator{
 		int numPoints = node.getNumPoints();
 		int numRoads = node.getGeometry().size() - numPoints;
 		City start, end, city;
+		
+		if((node.containsCity() || node.containsRoad()) && node.portalExists()){
+			return false;
+		}
+		
 		if(numPoints <= 1){
 			if(node.containsCity()){
 				city = node.getCity();

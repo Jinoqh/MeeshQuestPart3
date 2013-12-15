@@ -42,7 +42,4 @@ public abstract class Geometry implements Geometry2D, Comparable<Geometry> {
 		return getType() == POINT && this instanceof City;
 	}
 	
-	public boolean isPortal(){
-		return getType() == POINT && this instanceof Portal;
-	}
 }

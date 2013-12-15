@@ -490,7 +490,7 @@ public class Command {
 	public void processMapPortal(Element node) {
 		final Element commandNode = getCommandNode(node);
 		final Element parametersNode = results.createElement("parameters");
-	
+
 		final String name = processStringAttribute(node, "name", parametersNode);
 		final int x = processIntegerAttribute(node, "x", parametersNode);
 		final int y = processIntegerAttribute(node, "y", parametersNode);
@@ -500,6 +500,10 @@ public class Command {
 		/* create the city */
 		final Portal portal = new Portal(name, x, y, z);
 	
+		if(!pmPortalQuadtree.containsKey(z)){
+			pmPortalQuadtree.put(z, pmOrder == 1 ? new PM1Quadtree(spatialWidth, spatialHeight) : pmOrder == 3 ? new PM3Quadtree(spatialWidth, spatialHeight) : null );
+		}
+		
 		if (pmPortalQuadtree.get(z).containsPortal()){
 			addErrorNode("redundantPortal", commandNode, parametersNode);
 		}  else if (citiesByName.containsKey(portal.getName()) || allPortals.containsKey(portal.getName())){
@@ -508,23 +512,22 @@ public class Command {
 			addErrorNode("duplicatePortalCoordinates", commandNode, parametersNode);
 		} else {
 			try {
-				if(!pmPortalQuadtree.containsKey(z)){
-					pmPortalQuadtree.put(z, pmOrder == 1 ? new PM1Quadtree(spatialWidth, spatialHeight) : pmOrder == 3 ? new PM3Quadtree(spatialWidth, spatialHeight) : null );
-				}
-//				pmQuadtree.addPortal(portal);
+			
 				pmPortalQuadtree.get(z).addPortal(portal);
 				portalsByLevel.put(portal.getZ(), portal);
 				allPortals.put(name,portal);
-
+				
 				// add success node to results
 				addSuccessNode(commandNode, parametersNode, outputNode);
 			} catch (OutOfBoundsThrowable e){
-				addErrorNode("portalOutOfBoundsNode", commandNode, parametersNode);
+				addErrorNode("portalOutOfBounds", commandNode, parametersNode);
 			} catch (PortalIntersectsRoadThrowable e) {
-				addErrorNode("portalIntersectsRoad", commandNode, parametersNode);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (InvalidPartitionThrowable e) {
-				addErrorNode("portalViolatesPMRules", commandNode, parametersNode);
-			} 
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -755,11 +758,13 @@ public class Command {
 	private void drawPMQuadtreeHelper(Node node, CanvasPlus canvas) {
 		if (node.getType() == Node.BLACK) {
 			Black blackNode = (Black) node;
+			
+			if(blackNode.portalExists()){
+				final Portal p = blackNode.getPortal();
+				canvas.addPoint(p.getName(), p.getX(), p.getY(), Color.RED);
+			}
 			for (Geometry g : blackNode.getGeometry()) {
-				if (g.isPortal()){
-					Portal portal = (Portal) g;
-					canvas.addPoint(portal.getName(), portal.getX(), portal.getY(), Color.red);
-				} else if (g.isCity()) {
+				if (g.isCity()) {
 					City city = (City) g;
 					canvas.addPoint(city.getName(), city.getX(), city.getY(), Color.BLACK);
 				} else {
@@ -789,6 +794,10 @@ public class Command {
 		final Element parametersNode = results.createElement("parameters");
 		final Element outputNode = results.createElement("output");
 		final int z = processIntegerAttribute(node, "z", parametersNode);
+		
+		if(!pmPortalQuadtree.containsKey(z)){
+			pmPortalQuadtree.put(z, pmOrder == 1 ? new PM1Quadtree(spatialWidth, spatialHeight) : pmOrder == 3 ? new PM3Quadtree(spatialWidth, spatialHeight) : null );
+		}
 		
 		if (pmPortalQuadtree.get(z).isEmpty()){
 			/* empty PR Quadtree */
@@ -824,25 +833,27 @@ public class Command {
 			Black currentLeaf = (Black) currentNode;
 			Element blackNode = results.createElement("black");
 			blackNode.setAttribute("cardinality",
-					Integer.toString(currentLeaf.getGeometry().size()));
+					Integer.toString(currentLeaf.getGeometry().size() + (currentLeaf.portalExists() ? 1 : 0)));
+			
+			if(currentLeaf.portalExists()){
+				Portal p = currentLeaf.getPortal();
+				Element portal = results.createElement("portal");
+				portal.setAttribute("name", p.getName());
+				portal.setAttribute("x", Integer.toString(p.getX()));
+				portal.setAttribute("y", Integer.toString(p.getY()));
+				portal.setAttribute("z", Integer.toString(p.getZ()));
+				blackNode.appendChild(portal);
+			}
+			
 			for (Geometry g : currentLeaf.getGeometry()) {
-				if (g.isPortal()) {
-					Portal p = (Portal) g;
-					Element portal = results.createElement("portal");
-					portal.setAttribute("name", p.getName());
-					portal.setAttribute("x", Integer.toString(p.getX()));
-					portal.setAttribute("y", Integer.toString(p.getY()));
-					portal.setAttribute("z", Integer.toString(p.getZ()));
-					blackNode.appendChild(portal);
-				} else if (g.isCity()) {
+				if (g.isCity()) {
 					City c = (City) g;
 					Element city = results.createElement("city");
 					city.setAttribute("name", c.getName());
 					city.setAttribute("x", Integer.toString((int) c.getX()));
 					city.setAttribute("y", Integer.toString((int) c.getY()));
 					city.setAttribute("z", Integer.toString(c.getZ()));
-					city.setAttribute("radius",
-							Integer.toString((int) c.getRadius()));
+					city.setAttribute("radius", Integer.toString((int) c.getRadius()));
 					city.setAttribute("color", c.getColor());
 					blackNode.appendChild(city);
 				} else {
@@ -1265,7 +1276,7 @@ public class Command {
 	}
 
 	public void processUnmapPortal(Element node) {
-		final Element commandNode = getCommandNode(node);
+ 		final Element commandNode = getCommandNode(node);
 		final Element parametersNode = results.createElement("parameters");
 		final String name = processStringAttribute(node, "name", parametersNode);
 		
@@ -1278,7 +1289,7 @@ public class Command {
 				pmPortalQuadtree.get(p.getZ()).removePortal(p);
 				allPortals.remove(name);
 				addSuccessNode(commandNode, parametersNode, outputNode);
-			} catch (PortalNotMappedThrowable | RoadNotMappedThrowable e){
+			} catch (Exception e){
 				addErrorNode("portalDoesNotExist", commandNode, parametersNode);
 			}
 		}
@@ -1302,6 +1313,7 @@ public class Command {
 				final Integer z = citiesByName.get(start).getZ();
 				final Element outputNode = results.createElement("output");
 				final Element roadDeletedNode = results.createElement("roadDeleted");
+				
 				Road r = new Road((City) citiesByName.get(start), (City) citiesByName.get(end));
 				pmPortalQuadtree.get(z).removeRoad(r);
 				
@@ -1334,7 +1346,7 @@ public class Command {
 			try {
 				
 				TreeSet<Road> removedRoads = pmPortalQuadtree.get(z).removeCity(city);
-				
+				citiesByName.remove(name);
 				Element cityUnmappedNode = results.createElement("cityUnmapped");
 				cityUnmappedNode.setAttribute("color", city.getColor());
 				cityUnmappedNode.setAttribute("name", city.getName());
@@ -1360,5 +1372,9 @@ public class Command {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void processSweep(Element commandNode) {
+		citiesByName.sweep();
 	}
 }

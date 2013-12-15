@@ -1,35 +1,48 @@
 package cmsc420.city;
 
 import java.awt.geom.Point2D;
+import java.util.Comparator;
 
-public class Portal extends City{
+public class Portal{
+	private String name;
+	private int x;
+	private int y;
+	private int z;
 	
 	public Portal(String name, int x, int y, int z) {
-		super(name, x, y, z, 0, null);
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 	
 	public Portal(Portal p){
-		this(p.name, p.getX(), p.getY(), p.getZ());
+		this(p.getName(), p.getX(), p.getY(), p.getZ());
 	}
 	
-	@Override
-	public int getType(){
-		return POINT;
-	}
-	
-	@Override
 	public String toString(){
-		return "P"+super.toString();
+		return String.format("P(%d,%d)",x,y);
 	}
 	
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == this)
-			return true;
-		if (obj != null && (obj.getClass().equals(this.getClass()))) {
-			Portal p = (Portal) obj;
-			return (pt.equals(p.pt) && z == p.z && name.equals(p.name));
-		}
-		return false;
+	public Point2D.Float toPoint2D() {
+		return new Point2D.Float(x, y);
 	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
+	}
+	
+	public int getZ(){
+		return z;
+	}
+
+	
 }

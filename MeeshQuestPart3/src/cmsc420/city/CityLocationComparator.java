@@ -32,7 +32,14 @@ public class CityLocationComparator implements Comparator<City> {
 				return 1;
 			} else {
 				/* one.getY() == two.getY() */
-				return 0;
+				if(one.getZ() < two.getZ()){
+					return -1;
+				} else if (one.getZ() > two.getZ()){
+					return 1;
+				} else {
+					return 0;
+				}
+				
 			}
 		}
 	}

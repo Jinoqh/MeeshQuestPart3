@@ -1,6 +1,7 @@
 package cmsc420.pmquadtree;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Float;
 import java.awt.geom.Rectangle2D;
 import java.util.Collections;
 import java.util.HashMap;
@@ -97,11 +98,23 @@ public abstract class PMQuadtree {
 			throw new UnsupportedOperationException();
 		}
 
+		public Node add(Portal p, Float spatialOrigin, int spatialWidth,
+				int spatialHeight) throws InvalidPartitionThrowable {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
 		public Node remove(final Geometry g, final Point2D.Float origin,
 				final int width, final int height) throws RoadNotMappedThrowable{
 			throw new UnsupportedOperationException();
 		}
 		
+		public Node remove(Portal p, Float spatialOrigin, int spatialWidth,
+				int spatialHeight) throws PortalNotMappedThrowable {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
 		/**
 		 * Returns if this node follows the rules of the PM Quadtree.
 		 * 
@@ -147,11 +160,23 @@ public abstract class PMQuadtree {
 			final Black blackNode = new Black();
 			return blackNode.add(g, origin, width, height);
 		}
+		
+		public Node add(final Portal p, final Point2D.Float origin,
+				final int width, final int height) throws InvalidPartitionThrowable{
+			final Black blackNode = new Black();
+			return blackNode.add(p, origin, width, height);
+		}
 
 		public Node remove(final Geometry g, final Point2D.Float origin,
 				final int width, final int height) throws RoadNotMappedThrowable{
 			throw new RoadNotMappedThrowable();
 		}
+		public Node remove(Portal p, Float spatialOrigin, int spatialWidth,
+				int spatialHeight) throws PortalNotMappedThrowable {
+			// TODO Auto-generated method stub
+			throw new PortalNotMappedThrowable();
+		}
+
 		/**
 		 * Returns if this node follows the rules of the PM Quadtree.
 		 * 
@@ -178,7 +203,7 @@ public abstract class PMQuadtree {
 	 * of the PM Quadtree.
 	 */
 	public class Black extends Node {
-
+		protected Portal p;
 		/** list of cities and roads contained within black node */
 		final protected LinkedList<Geometry> geometry;
 
@@ -192,6 +217,7 @@ public abstract class PMQuadtree {
 			super(BLACK);
 			geometry = new LinkedList<Geometry>();
 			numPoints = 0;
+			p = null;
 		}
 
 		/**
@@ -234,8 +260,7 @@ public abstract class PMQuadtree {
 				if (Inclusive2DIntersectionVerifier.intersects(r.getStart().toPoint2D(), rect)) {
 					addGeometryToList(r.getStart());
 				}
-	
-				/* check if end point intersects with region */
+				
 				if (Inclusive2DIntersectionVerifier.intersects(r.getEnd().toPoint2D(), rect)) {
 					addGeometryToList(r.getEnd());
 				}
@@ -255,15 +280,27 @@ public abstract class PMQuadtree {
 			}
 		}
 		
+		public Node add(final Portal p, final Point2D.Float origin,
+				final int width, final int height) throws InvalidPartitionThrowable{
+			
+			this.p = p;
+			
+			if (isValid()) {
+				/* valid so return this black node */
+				return this;
+			} else {
+				/* invalid so partition into a Gray node */
+				return partition(origin, width, height);
+			}
+		}
+		
 		public Node remove(final Geometry g, final Point2D.Float origin,
 				final int width, final int height){
 			
-			if(g.isPortal()){
-				geometry.remove((Portal)g);
-			} else if(g.isRoad()){
+			
+			if(g.isRoad()){
 				geometry.remove((Road) g);
 	
-				
 				if(numRoadsForCity.get(((Road)g).getStart().getName()) <= 0){
 					geometry.remove(((Road)g).getStart());
 				}
@@ -271,7 +308,21 @@ public abstract class PMQuadtree {
 					geometry.remove(((Road)g).getEnd());
 				}
 			} 
-			if(geometry.isEmpty()){
+			
+			if(geometry.isEmpty() && !portalExists()){
+				return white; 	
+			} else {
+				return this;
+			}
+		}
+
+		public Node remove(Portal p, Float spatialOrigin, int spatialWidth,
+				int spatialHeight) {
+			if(portalExists()){
+				p = null;
+			}
+			
+			if(geometry.isEmpty() && !portalExists()){
 				return white; 	
 			} else {
 				return this;
@@ -292,7 +343,7 @@ public abstract class PMQuadtree {
 			if (index < 0) {
 				geometry.add(-index - 1, g);
 
-				if (g.isCity() || g.isPortal()) {
+				if (g.isCity()) {
 					// g is a city or a portal
 					numPoints++;
 				}
@@ -337,8 +388,9 @@ public abstract class PMQuadtree {
 		 *             if two roads intersect
 		 */
 		private Node partition(final Point2D.Float origin, final int width, final int height) throws InvalidPartitionThrowable  {
-			if(width <= 1 || height <= 1)
+			if(width <= 1 || height <= 1){
 				throw new InvalidPartitionThrowable("PMViolation");
+			}
 			/* create new gray node */
 			Node gray = new Gray(origin, width, height);
 
@@ -348,12 +400,10 @@ public abstract class PMQuadtree {
 				gray = gray.add(g, origin, width, height);
 			}
 			
-			// add portal
-			for(Geometry g : geometry){
-				if(g.isPortal()){
-					gray = gray.add(g, origin, width, height);
-				}
+			if(portalExists()){
+				gray = gray.add(p, origin, width, height);
 			}
+			
 			return gray;
 		}
 
@@ -391,6 +441,18 @@ public abstract class PMQuadtree {
 		public City getCity() {
 			final Geometry g = geometry.getFirst();
 			return g.isCity() ? (City)g : null;
+		}
+
+		public boolean portalExists() {
+			return p != null;
+		}
+		
+		public void setPortal(Portal p){
+			this.p = p;
+		}
+
+		public Portal getPortal() {
+			return p;
 		}		
 	}
 
@@ -416,6 +478,7 @@ public abstract class PMQuadtree {
 		/** half the height of the rectangular bounds of this node */
 		final protected int halfHeight;
 
+		private boolean portalExists;
 		/**
 		 * Constructs and initializes an internal PM Quadtree node.
 		 * 
@@ -432,7 +495,7 @@ public abstract class PMQuadtree {
 
 			/* set this node's origin */
 			this.origin = origin;
-
+			this.portalExists = false;
 			/* initialize the children as white nodes */
 			children = new Node[4];
 			for (int i = 0; i < 4; i++) {
@@ -481,21 +544,30 @@ public abstract class PMQuadtree {
 			
 			for (int i = 0; i < 4; i++) {
 				if (g.isRoad() && Inclusive2DIntersectionVerifier.intersects(((Road)g).toLine2D(),regions[i]) 
-						|| g.isCity() && Inclusive2DIntersectionVerifier.intersects(((City)g).toPoint2D(),regions[i])
-						|| g.isPortal() && Inclusive2DIntersectionVerifier.intersects(((Portal)g).toPoint2D(),regions[i])) {
+						|| g.isCity() && Inclusive2DIntersectionVerifier.intersects(((City)g).toPoint2D(),regions[i])) {
 					children[i] = children[i].add(g, origins[i], halfWidth, halfHeight);
 				}
 			}
 			return this;
 		}
 
-		public Node remove(final Geometry g, final Point2D.Float origin,
-				final int width, final int height) throws RoadNotMappedThrowable{
-			for (int i = 0; i < 4; i++){
-				if (g.isRoad() && Inclusive2DIntersectionVerifier.intersects(((Road)g).toLine2D(),regions[i]) 
-						|| g.isCity() && Inclusive2DIntersectionVerifier.intersects(((City)g).toPoint2D(),regions[i])
-						|| g.isPortal() && Inclusive2DIntersectionVerifier.intersects(((Portal)g).toPoint2D(),regions[i])) {
-					children[i] = children[i].remove(g, origins[i], halfWidth, halfHeight);
+		public Node add(final Portal p, final Point2D.Float origin,
+				final int width, final int height) throws InvalidPartitionThrowable{
+			
+			for (int i = 0; i < 4; i++) {
+				if(Inclusive2DIntersectionVerifier.intersects(p.toPoint2D(), regions[i])){
+					children[i] = children[i].add(p, origins[i], halfWidth, halfHeight);
+				}
+			}
+			
+			return this;
+		}
+
+		public Node remove(Portal p, Float spatialOrigin, int spatialWidth,
+				int spatialHeight) throws PortalNotMappedThrowable {
+			for(int i = 0; i < 4; i++){
+				if(Inclusive2DIntersectionVerifier.intersects(p.toPoint2D(),regions[i])){
+					children[i] = children[i].remove(p, origins[i], halfWidth, halfHeight);
 				}
 			}
 			
@@ -530,6 +602,49 @@ public abstract class PMQuadtree {
 				return this;
 			}
 		}
+
+		public Node remove(final Geometry g, final Point2D.Float origin,
+				final int width, final int height) throws RoadNotMappedThrowable{
+			for (int i = 0; i < 4; i++){
+				if (g.isRoad() && Inclusive2DIntersectionVerifier.intersects(((Road)g).toLine2D(),regions[i]) 
+						|| g.isCity() && Inclusive2DIntersectionVerifier.intersects(((City)g).toPoint2D(),regions[i])) {
+					children[i] = children[i].remove(g, origins[i], halfWidth, halfHeight);
+				}
+			}
+			
+			int numWhite, numBlack, numGray;
+			numWhite = numBlack = numGray = 0;
+			for(int i = 0; i < 4; i++){
+				switch(children[i].getType()){
+					case(WHITE): numWhite++; break;
+					case(BLACK): numBlack++; break;
+					case(GRAY): numGray++; break;
+				}
+			}
+			
+			if(numWhite == 4){
+				return white;
+			}
+			
+			if(numBlack == 1 && numWhite == 3){
+				return getBlackChild();
+			}
+			
+			if(numGray < 4){
+				Black b = new Black();
+				
+				removeHelper(this, b);
+				
+				
+				if(b.isValid()){
+					return b;
+				} else {
+					return this;
+				}
+			} else {
+				return this;
+			}
+		}
 		
 		public void removeHelper(Node node, Black b){
 			if(node.getType() == GRAY){
@@ -538,6 +653,9 @@ public abstract class PMQuadtree {
 				}
 			}
 			if(node.getType() == BLACK){
+				if(((Black) node).portalExists()){
+					b.setPortal(((Black) node).getPortal());
+				}
 				for(Geometry geometry : (((Black) node).geometry)){
 					b.addGeometryToList(geometry);
 				}
@@ -641,6 +759,10 @@ public abstract class PMQuadtree {
 		public int getHalfHeight() {
 			return halfHeight;
 		}
+		
+		public void setPortalExists(){
+			this.portalExists = true;
+		}
 	}
 
 	public PMQuadtree(final Validator validator, final int spatialWidth,
@@ -682,6 +804,7 @@ public abstract class PMQuadtree {
 			throws RoadAlreadyExistsThrowable, OutOfBoundsThrowable, RoadIntersectsAnotherRoadThrowable, InvalidPartitionThrowable {
 		final Road g2 = new Road(g.getEnd(), g.getStart());
 
+		
 		if (allRoads.contains(g) || allRoads.contains(g2)) {
 			throw new RoadAlreadyExistsThrowable();
 		}
@@ -699,59 +822,79 @@ public abstract class PMQuadtree {
 		if (!Inclusive2DIntersectionVerifier.intersects(g.toLine2D(), world)) {
 			throw new OutOfBoundsThrowable();
 		}
-
+ 
+		if (Inclusive2DIntersectionVerifier.intersects(g.getStart().toPoint2D(), world)) {
+			increaseNumRoadsMap(g.getStart().getName());
+		} 
+		if (Inclusive2DIntersectionVerifier.intersects(g.getEnd().toPoint2D(), world)) {
+			increaseNumRoadsMap(g.getEnd().getName());
+		} 
+		
 		try {
 			allRoads.add(g);
 			root = root.add(g, spatialOrigin, spatialWidth, spatialHeight);
 		} catch (InvalidPartitionThrowable e){
-//			try {
-//				this.removeRoad(g);
-//			} catch (RoadNotMappedThrowable exception){
-//				
-//			}
+			try {
+				this.removeRoad(g);
+				allRoads.remove(g);
+			} catch (RoadNotMappedThrowable e1) {
+				
+			}
 			throw new InvalidPartitionThrowable();
 		}
-		if (Inclusive2DIntersectionVerifier.intersects(g.getStart().toPoint2D(), world)) {
-			increaseNumRoadsMap(g.getStart().getName());
-		}
-		if (Inclusive2DIntersectionVerifier.intersects(g.getEnd().toPoint2D(), world)) {
-			increaseNumRoadsMap(g.getEnd().getName());
-		}
+		
 
 	}
 	
-	public void addPortal(final Portal p) throws OutOfBoundsThrowable, PortalIntersectsRoadThrowable, InvalidPartitionThrowable{
-		Rectangle2D.Float world = new Rectangle2D.Float(spatialOrigin.x, spatialOrigin.y,spatialWidth, spatialHeight);
-		if(!Inclusive2DIntersectionVerifier.intersects(p.toPoint2D(), world)){
-			throw new OutOfBoundsThrowable();
-		}
-		
-		for (Road r : allRoads) { 
-			if(Inclusive2DIntersectionVerifier.intersects(p.toPoint2D(), r.toLine2D())){
+	public void addPortal(final Portal p) throws PortalIntersectsRoadThrowable, InvalidPartitionThrowable, OutOfBoundsThrowable {
+		for(Road r : allRoads){
+			if (Inclusive2DIntersectionVerifier.intersects(r.getStart().toPoint2D(), p.toPoint2D()) ||
+				Inclusive2DIntersectionVerifier.intersects(r.getEnd().toPoint2D(), p.toPoint2D()) ||
+				Inclusive2DIntersectionVerifier.intersects(p.toPoint2D(), r.toLine2D())) {
 				throw new PortalIntersectsRoadThrowable();
 			}
 		}
 		
-		root = root.add(p, spatialOrigin, spatialWidth, spatialHeight);
-		portal = p;
+		Rectangle2D.Float world = new Rectangle2D.Float(spatialOrigin.x, spatialOrigin.y,spatialWidth, spatialHeight);
+		if (!Inclusive2DIntersectionVerifier.intersects(p.toPoint2D(), world)) {
+			throw new OutOfBoundsThrowable();
+		}
+		try {
+			root = root.add(p, spatialOrigin, spatialWidth, spatialHeight);
+			portal = p;
+		} catch (InvalidPartitionThrowable e) {
+			
+			try {
+				root = root.remove(p, spatialOrigin, spatialWidth, spatialHeight);
+				portal = null;
+			} catch (PortalNotMappedThrowable e1) {
+				
+			}
+			
+		}
 		
 	}
 
-	public void removePortal(Portal p) throws RoadNotMappedThrowable, PortalNotMappedThrowable {
-		if (portal == null){
-			throw new PortalNotMappedThrowable();
-		}
+	public void removePortal(Portal p) throws PortalNotMappedThrowable {
 		root = root.remove(p, spatialOrigin, spatialWidth, spatialHeight);
-		portal = null;
+		this.portal = null;
+	}
+
+	public Node remove(Portal p, Float spatialOrigin, int spatialWidth,
+			int spatialHeight) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 
 	public TreeSet<Road> removeCity(City c) throws CityNotMappedThrowable, RoadNotMappedThrowable {	
 		TreeSet<Road> removedRoads = new TreeSet<Road>(new RoadNameComparator());
+		
 		for(Road r : allRoads){ 
 			if(c.equals(r.getStart()) || c.equals(r.getEnd())){
 				decreaseNumRoadsMap(r.getEnd().getName());
 				decreaseNumRoadsMap(r.getStart().getName());
 			}
+
 		}
 		
 		for(Road r : allRoads){
@@ -770,6 +913,7 @@ public abstract class PMQuadtree {
 	
 	private void increaseNumRoadsMap(final String name) {
 		Integer numRoads = numRoadsForCity.get(name);
+		
 		if (numRoads != null) {
 			numRoads++;
 			numRoadsForCity.put(name, numRoads);
@@ -781,11 +925,15 @@ public abstract class PMQuadtree {
 	private void decreaseNumRoadsMap (final String name){
 		Integer numRoads = numRoadsForCity.get(name);
 		
-		numRoads--;
-		if(numRoads <= 0){
-			numRoads = 0;
+		if(numRoads == null){
+			numRoadsForCity.put(name, 0);
+		} else {
+			numRoads--;
+			if(numRoads <= 0){
+				numRoads = 0;
+			}
+			numRoadsForCity.put(name, numRoads);
 		}
-		numRoadsForCity.put(name, numRoads);
 	}
 
 	public void clear() {

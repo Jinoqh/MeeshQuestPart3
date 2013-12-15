@@ -181,6 +181,8 @@ public class MeeshQuest {
         	command.processDeleteCity(commandNode);
         } else if (name.equals("unmapRoad")){
         	command.processUnmapRoad(commandNode);
+        } else if (name.equals("sweep")){
+        	command.processSweep(commandNode);
         } else {
             /* problem with the Validator */
             System.exit(-1);
