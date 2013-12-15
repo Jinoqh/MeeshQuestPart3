@@ -26,7 +26,7 @@ public class MeeshQuest {
     private File xmlOutput;
 
     public static void main(String[] args) {
-    	final boolean debugMode = true;
+    	final boolean debugMode = false;
     	final String inputFileName = "input.xml";
     	final String outputFileName = "output.xml";
         final MeeshQuest m = new MeeshQuest();

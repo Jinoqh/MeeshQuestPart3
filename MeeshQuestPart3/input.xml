@@ -1,43 +1,280 @@
 <commands 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:noNamespaceSchemaLocation="part3in.xsd" 
+spatialWidth="64" 
+spatialHeight="64" 
 pmOrder="3" 
-g="3" 
-spatialWidth="16" 
-spatialHeight="16"> 
-<createCity x="4" radius="5" color="red" name="D" z="1" y="12"/> 
-<createCity x="12" radius="5" color="red" name="C" z="1" y="12"/> 
-<createCity x="12" radius="5" color="red" name="B" z="1" y="4"/> 
-<createCity x="4" radius="5" color="red" name="A" z="1" y="4"/> 
-<mapRoad end="A" start="B"/> 
-<mapRoad end="B" start="C"/> 
-<mapRoad end="C" start="D"/> 
-<mapRoad end="D" start="A"/> 
-<mapRoad end="C" start="A"/> 
-<printPMQuadtree z="1"/> 
-<createCity x="8" radius="1" color="red" name="E" z="1" y="10"/> 
-<mapRoad end="C" start="E"/> 
-<mapRoad end="D" start="E"/> 
-<printPMQuadtree z="1"/> 
-<unmapRoad end="A" start="C"/> 
-<mapRoad end="D" start="B"/> 
-<printPMQuadtree z="1"/> 
-<mapPortal x="8" name="Z" z="1" y="6"/> 
-<printPMQuadtree z="1"/> 
-<deleteCity name="A"/> 
-<printPMQuadtree z="1"/> 
-<unmapRoad end="D" start="E"/> 
-<printPMQuadtree z="1"/> 
-<unmapPortal name="Z"/> 
-<printPMQuadtree z="1"/> 
-<mapPortal x="8" name="z" z="1" y="6"/> 
-<printPMQuadtree z="1"/> 
-<deleteCity name="E"/> 
-<printPMQuadtree z="1"/> 
+g="3"> 
+<createCity name="A" x="1" y="1" radius="50" color="red" id="1" z="1"/> 
+<createCity name="B" x="63" y="63" radius="80" color="orange" id="2" z="1"/> 
+<createCity name="C" radius="5" x="1" y="63" color="yellow" id="3" z="1"/> 
+<createCity name="D" radius="5" x="63" y="1" color="yellow" id="4" z="1"/> 
+<createCity name="E" radius="5" x="32" y="32" color="blue" id ="5" z="1"/> 
+<createCity name="F" x="3" y="30" radius="50" color="red" id="6" z="1"/> 
+<createCity name="G" x="30" y="62" radius="80" color="orange" id="7" z="1"/> 
+<createCity name="H" radius="5" x="34" y="2" color="yellow" id="8" z="1"/> 
+<createCity name="I" radius="5" x="62" y="34" color="yellow" id="9" z="1"/> 
+<createCity name="J" radius="5" x="3" y="16" color="blue" id ="10" z="1"/> 
+<createCity name="K" x="16" y="60" radius="50" color="red" id="11" z="1"/> 
+<createCity name="L" x="60" y="48" radius="80" color="orange" id="12" z="1"/> 
+<createCity name="M" radius="5" x="48" y="4" color="yellow" id="13" z="1"/> 
+<createCity name="N" radius="5" x="16" y="16" color="yellow" id="14" z="1"/> 
+<createCity name="O" radius="5" x="16" y="48" color="blue" id ="15" z="1"/> 
+<createCity name="P" x="48" y="48" radius="50" color="red" id="16" z="1"/> 
+<createCity name="Q" x="48" y="16" radius="80" color="orange" id="17" z="1"/> 
+<createCity name="R" radius="5" x="20" y="16" color="yellow" id="18" z="1"/> 
+<createCity name="S" radius="5" x="16" y="44" color="yellow" id="19" z="1"/> 
+<createCity name="T" radius="5" x="44" y="56" color="blue" id ="20" z="1"/> 
+<createCity name="U" x="56" y="20" radius="50" color="red" id="21" z="1"/> 
+<createCity name="V" x="32" y="65" radius="80" color="orange" id="22" z="1"/> 
+<createCity name="W" radius="5" x="65" y="32" color="yellow" id="23" z="1"/> 
+<createCity name="X" radius="5" x="65" y="30" color="yellow" id="24" z="1"/> 
+<createCity name="Y" radius="5" x="0" y="3" color="yellow" id="25" z="1"/> 
+<createCity name="Z" radius="5" x="0" y="5" color="yellow" id="26" z="1"/> 
+<createCity name="VIO" radius="5" x="0" y="1" color="yellow" id="26" z="1"/>
+<createCity name="OUT" radius="5" x="70" y="70" color="yellow" id="26" z="1"/>
+<createCity name="OUT2" radius="5" x="60" y="70" color="yellow" id="26" z="1"/>
+
+<createCity name="A2" x="1" y="1" radius="50" color="red" id="1" z="2"/> 
+<createCity name="B2" x="63" y="63" radius="80" color="orange" id="2" z="2"/> 
+<createCity name="C2" radius="5" x="1" y="63" color="yellow" id="3" z="2"/> 
+<createCity name="D2" radius="5" x="63" y="1" color="yellow" id="4" z="2"/> 
+<createCity name="E2" radius="5" x="32" y="32" color="blue" id ="5" z="2"/> 
+<createCity name="F2" x="3" y="30" radius="50" color="red" id="6" z="2"/> 
+<createCity name="G2" x="30" y="62" radius="80" color="orange" id="7" z="2"/> 
+<createCity name="H2" radius="5" x="34" y="2" color="yellow" id="8" z="2"/> 
+<createCity name="I2" radius="5" x="62" y="34" color="yellow" id="9" z="2"/> 
+<createCity name="J2" radius="5" x="3" y="16" color="blue" id ="10" z="2"/> 
+<createCity name="K2" x="16" y="60" radius="50" color="red" id="11" z="2"/> 
+<createCity name="L2" x="60" y="48" radius="80" color="orange" id="12" z="2"/> 
+<createCity name="M2" radius="5" x="48" y="4" color="yellow" id="13" z="2"/> 
+<createCity name="N2" radius="5" x="16" y="16" color="yellow" id="14" z="2"/> 
+<createCity name="O2" radius="5" x="16" y="48" color="blue" id ="15" z="2"/> 
+<createCity name="P2" x="48" y="48" radius="50" color="red" id="16" z="2"/> 
+<createCity name="Q2" x="48" y="16" radius="80" color="orange" id="17" z="2"/> 
+<createCity name="R2" radius="5" x="20" y="16" color="yellow" id="18" z="2"/> 
+<createCity name="S2" radius="5" x="16" y="44" color="yellow" id="19" z="2"/> 
+<createCity name="T2" radius="5" x="44" y="56" color="blue" id ="20" z="2"/> 
+<createCity name="U2" x="56" y="20" radius="50" color="red" id="21" z="2"/> 
+<createCity name="V2" x="32" y="65" radius="80" color="orange" id="22" z="2"/> 
+<createCity name="W2" radius="5" x="65" y="32" color="yellow" id="23" z="2"/> 
+<createCity name="X2" radius="5" x="65" y="30" color="yellow" id="24" z="2"/> 
+<createCity name="Y2" radius="5" x="0" y="3" color="yellow" id="25" z="2"/> 
+<createCity name="Z2" radius="5" x="0" y="5" color="yellow" id="26" z="2"/> 
+
+<printPMQuadtree z="1" id="25"/> 
+<mapRoad start="A" end="C" id="26"/> 
+<mapRoad start="B" end="D" id="28"/> 
+<mapRoad start="M" end="H" id="30"/> 
+<mapRoad start="J" end="F" id="31"/> 
+<mapRoad start="N" end="R" id="33"/> 
+<mapRoad start="S" end="O" id="35"/> 
+<mapRoad start="G" end="K" id="37"/>
+
+
+<mapPortal name="PP" x="20" y="2" z="1"/>
+
+<mapRoad start="SSS" end="K" id="37"/>
+<mapRoad start="G" end="SSS" id="37"/>
+<mapRoad start="G" end="G" id="37"/>
+<mapRoad start="G2" end="G" id="37"/>
+<mapRoad start="PP" end="A" id="37"/>
+<mapRoad start="G" end="K" id="37"/>
+<mapRoad start="OUT" end="OUT2" id="37"/>
+<mapRoad start="A" end="B" id="37"/>
+<mapRoad start="VIO" end="A" id="37"/>
+
+<unmapRoad start="SSS" end="A" id="37"/>
+<unmapRoad start="A" end="SSS" id="37"/>
+<unmapRoad start="A" end="A" id="37"/>
+<unmapRoad start="Z" end="Y" id="37"/>
+
+<mapPortal name="PORT" x="12" y="2" z="1"/>
+<mapPortal name="PP" x="1" y="1" z="2"/>
+<unmapPortal name="PP"/>
+
+<mapPortal name="PP" x="1" y="1" z="2"/>
+<mapPortal name="PP" x="80" y="80" z="1"/>
+<mapPortal name="PP" x="1" y="15" z="1"/>
+<mapPortal name="PP" x="2" y="1" z="1"/>
+
+<unmapPortal name="ZZZ"/>
+
+<mapPortal name="PP" x="20" y="2" z="1"/>
+
+<unmapPortal name="PA"/>
+
+ 
+<mapRoad start="T" end="P" id="39"/> 
+<mapRoad start="I" end="L" id="41"/> 
+<mapRoad start="U" end="Q" id="43"/> 
+<mapRoad start="W" end="X" id="45"/> 
+<mapRoad start="V" end="E" id="47"/>  
+<mapRoad start="Y" end="Z" id="51"/> 
+
+<mapRoad start="K" end="C" id="26"/> 
+<mapRoad start="C" end="O" id="28"/>  
+<mapRoad start="C" end="S" id="30"/> 
+<mapRoad start="E" end="S" id="31"/>
+<mapRoad start="N" end="F" id="33"/> 
+<mapRoad start="A" end="N" id="35"/> 
+<mapRoad start="G" end="K" id="37"/> 
+<mapRoad start="R" end="H" id="39"/> 
+<mapRoad start="Q" end="M" id="41"/> 
+<mapRoad start="U" end="D" id="43"/> 
+<mapRoad start="L" end="B" id="45"/> 
+<mapRoad start="P" end="E" id="47"/> 
+<mapRoad start="T" end="G" id="51"/> 
+<printPMQuadtree id="52" z="1"/>
+
+
+<printPMQuadtree z="2" id="25"/> 
+<mapRoad start="A2" end="C2" id="26"/> 
+<mapRoad start="B2" end="D2" id="28"/> 
+<mapRoad start="M2" end="H2" id="30"/> 
+<mapRoad start="J2" end="F2" id="31"/> 
+<mapRoad start="N2" end="R2" id="33"/> 
+<mapRoad start="S2" end="O2" id="35"/> 
+<mapRoad start="G2" end="K2" id="37"/>
+
+<mapPortal name="PPP" x="20" y="2" z="2"/>
+ 
+<mapRoad start="T2" end="P2" id="39"/> 
+<mapRoad start="I2" end="L2" id="41"/> 
+<mapRoad start="U2" end="Q2" id="43"/> 
+<mapRoad start="W2" end="X2" id="45"/> 
+<mapRoad start="V2" end="E2" id="47"/>  
+<mapRoad start="Y2" end="Z2" id="51"/> 
+
+<mapRoad start="K2" end="C2" id="26"/> 
+<mapRoad start="C2" end="O2" id="28"/>  
+<mapRoad start="C2" end="S2" id="30"/> 
+<mapRoad start="E2" end="S2" id="31"/>
+<mapRoad start="N2" end="F2" id="33"/> 
+<mapRoad start="A2" end="N2" id="35"/> 
+<mapRoad start="G2" end="K2" id="37"/> 
+<mapRoad start="R2" end="H2" id="39"/> 
+<mapRoad start="Q2" end="M2" id="41"/> 
+<mapRoad start="U2" end="D2" id="43"/> 
+<mapRoad start="L2" end="B2" id="45"/> 
+<mapRoad start="P2" end="E2" id="47"/> 
+<mapRoad start="T2" end="G2" id="51"/> 
+<printPMQuadtree id="52" z="2"/>
+
+
+<unmapRoad start="A" end="C" id="26"/> 
+<printPMQuadtree id="52" z="1"/>
+<unmapRoad start="B" end="D" id="28"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="M" end="H" id="30"/> 
+<printPMQuadtree id="52" z="1"/>
+<unmapRoad start="J" end="F" id="31"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="N" end="R" id="33"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="S" end="O" id="35"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="G" end="K" id="37"/> 
+<printPMQuadtree id="52" z="1"/>
+<unmapRoad start="T" end="P" id="39"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="I" end="L" id="41"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="U" end="Q" id="43"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="W" end="X" id="45"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="V" end="E" id="47"/>
+<printPMQuadtree id="52" z="1"/>  
+<unmapRoad start="Y" end="Z" id="51"/> 
+
+<printPMQuadtree id="52" z="1"/>
+
+
+<unmapRoad start="A2" end="C2" id="26"/> 
+<printPMQuadtree id="52" z="2"/>
+<unmapRoad start="B2" end="D2" id="28"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="M2" end="H2" id="30"/> 
+<printPMQuadtree id="52" z="2"/>
+<unmapRoad start="J2" end="F2" id="31"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="N2" end="R2" id="33"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="S2" end="O2" id="35"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="G2" end="K2" id="37"/> 
+<printPMQuadtree id="52" z="2"/>
+<unmapRoad start="T2" end="P2" id="39"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="I2" end="L2" id="41"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="U2" end="Q2" id="43"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="W2" end="X2" id="45"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="V2" end="E2" id="47"/>
+<printPMQuadtree id="52" z="2"/>  
+<unmapRoad start="Y2" end="Z2" id="51"/> 
+
+<printPMQuadtree id="52" z="2"/>
+
+<unmapPortal name="PP"/>
+<unmapPortal name="PPP"/>
+
+<unmapRoad start="K" end="C" id="26"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="C" end="O" id="28"/> 
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="C" end="S" id="30"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="E" end="S" id="31"/>
+<printPMQuadtree id="52" z="1"/>
+<unmapRoad start="N" end="F" id="33"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="A" end="N" id="35"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="G" end="K" id="37"/> 
+<printPMQuadtree id="52" z="1"/>
+<unmapRoad start="R" end="H" id="39"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="Q" end="M" id="41"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="U" end="D" id="43"/>
+<printPMQuadtree id="52" z="1"/> 
 <deleteCity name="B"/> 
-<printPMQuadtree z="1"/> 
-<unmapRoad end="C" start="B"/> 
-<printPMQuadtree z="1"/> 
-<unmapPortal name="Z"/> 
-<clearAll/> 
+<printPMQuadtree id="52" z="1"/>
+<deleteCity name="P"/>
+<printPMQuadtree id="52" z="1"/> 
+<unmapRoad start="T" end="G" id="51"/> 
+<printPMQuadtree id="52" z="1"/>
+
+
+<unmapRoad start="K2" end="C2" id="26"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="C2" end="O2" id="28"/> 
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="C2" end="S2" id="30"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="E2" end="S2" id="31"/>
+<printPMQuadtree id="52" z="2"/>
+<unmapRoad start="N2" end="F2" id="33"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="A2" end="N2" id="35"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="G2" end="K2" id="37"/> 
+<printPMQuadtree id="52" z="2"/>
+<unmapRoad start="R2" end="H2" id="39"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="Q2" end="M2" id="41"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="U2" end="D2" id="43"/>
+<printPMQuadtree id="52" z="2"/> 
+<deleteCity name="B2"/> 
+<printPMQuadtree id="52" z="2"/>
+<deleteCity name="P2"/>
+<printPMQuadtree id="52" z="2"/> 
+<unmapRoad start="T2" end="G2" id="51"/> 
+<printPMQuadtree id="52" z="2"/>
+
 </commands>

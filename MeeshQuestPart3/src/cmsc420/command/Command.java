@@ -522,11 +522,9 @@ public class Command {
 			} catch (OutOfBoundsThrowable e){
 				addErrorNode("portalOutOfBounds", commandNode, parametersNode);
 			} catch (PortalIntersectsRoadThrowable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				addErrorNode("portalIntersectsRoad", commandNode, parametersNode);
 			} catch (InvalidPartitionThrowable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				addErrorNode("portalViolatesPMRules", commandNode, parametersNode);
 			}
 		}
 	}
