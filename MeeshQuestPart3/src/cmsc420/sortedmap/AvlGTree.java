@@ -50,11 +50,20 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
     }
     
     public void sweep(){
-    	
-    	for(Entry<K,V> entry : this.entrySet){
+    	AvlNode<K,V> newRoot = null;
+     
+    	for(Entry<K,V> entry : this.entrySet()){
     		
+    		if(newRoot == null){
+    			newRoot = new AvlNode(entry.getKey(), entry.getValue(), comparator);
+    		}
+//	    	if(!((AvlNode) entry).isTrash()){
+//	    		newRoot.add(new AvlNode(entry.getKey(), entry.getValue(), comparator));
+//	    	}
+    		System.out.println(((AvlNode) entry).isTrash());
     	}
-    	
+//    	
+//    	this.root = newRoot;
     }
 
     public Comparator<? super K> comparator() {

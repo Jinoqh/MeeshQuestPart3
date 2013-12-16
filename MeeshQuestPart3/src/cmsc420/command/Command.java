@@ -81,7 +81,7 @@ public class Command {
 
 	
 	private final RoadAdjacencyList roads = new RoadAdjacencyList();
-
+//	private final TreeMap<Integer, RoadAdjacencyList> roads = new TreeMap<Integer, RoadAdjacencyList>();
 	/** stores mapped cities in a spatial data structure */
 	protected PMQuadtree pmQuadtree;
 
@@ -547,10 +547,23 @@ public class Command {
 		final Element commandNode = getCommandNode(node);
 		final Element parametersNode = results.createElement("parameters");
 
-		final String start = processStringAttribute(node, "start",
-				parametersNode);
+		final String start = processStringAttribute(node, "start", parametersNode);
 		final String end = processStringAttribute(node, "end", parametersNode);
-
+		
+		City startCity, endCity;
+		
+		startCity = endCity = null;
+		
+		//Check if start and end is mapped in the pmQuadtree;
+		for(int z : pmPortalQuadtree.keySet()){
+			if(pmPortalQuadtree.get(z).containsCity(start)){
+				startCity = citiesByName.get(start);
+			}
+			if(pmPortalQuadtree.get(z).containsCity(end)){
+				endCity = citiesByName.get(end);
+			}
+		}
+		
 		String saveMapName = "";
 		if (!node.getAttribute("saveMap").equals("")) {
 			saveMapName = processStringAttribute(node, "saveMap",
@@ -563,17 +576,17 @@ public class Command {
 					parametersNode);
 		}
 
-		if (!pmQuadtree.containsCity(start)) {
+		if (startCity == null) {
 			addErrorNode("nonExistentStart", commandNode, parametersNode);
-		} else if (!pmQuadtree.containsCity(end)) {
+		} else if (endCity == null) {
 			addErrorNode("nonExistentEnd", commandNode, parametersNode);
 		} else {
 			final DecimalFormat decimalFormat = new DecimalFormat("#0.000");
 
 			final Dijkstranator dijkstranator = new Dijkstranator(roads);
 
-			final City startCity = (City) citiesByName.get(start);
-			final City endCity = (City) citiesByName.get(end);
+//			final City startCity = (City) citiesByName.get(start);
+//			final City endCity = (City) citiesByName.get(end);
 
 			final Path path = dijkstranator.getShortestPath(startCity, endCity);
 
@@ -901,13 +914,17 @@ public class Command {
 			pathFile = processStringAttribute(node, "saveMap", parametersNode);
 		}
 
-		if (radius == 0) {
+		if (radius == 0 || !pmPortalQuadtree.containsKey(z)) {
 			addErrorNode("noCitiesExistInRange", commandNode, parametersNode);
 		} else {
 			final TreeSet<Geometry> citiesInRange = new TreeSet<Geometry>();
-			rangeHelper(new Circle2D.Double(x, y, radius),
-					pmQuadtree.getRoot(), citiesInRange, false, true);
-
+			
+			for(Integer level : pmPortalQuadtree.keySet()){
+//				rangeHelper(new Circle2D.Double(x, y, radius),
+//						pmPortalQuadtree.get(level).getRoot(), citiesInRange, false, true);
+				rangeHelper(x,y,z, radius, pmPortalQuadtree.get(level).getRoot(), citiesInRange, false, true);
+			}
+			
 			/* print out cities within range */
 			if (citiesInRange.isEmpty()) {
 				addErrorNode("noCitiesExistInRange", commandNode,
@@ -942,21 +959,22 @@ public class Command {
 		final int x = processIntegerAttribute(node, "x", parametersNode);
 		final int y = processIntegerAttribute(node, "y", parametersNode);
 		final int z = processIntegerAttribute(node, "z", parametersNode);
-		final int radius = processIntegerAttribute(node, "radius",
-				parametersNode);
+		final int radius = processIntegerAttribute(node, "radius", parametersNode);
 
 		String pathFile = "";
 		if (!node.getAttribute("saveMap").equals("")) {
 			pathFile = processStringAttribute(node, "saveMap", parametersNode);
 		}
 
-		if (radius == 0) {
+		if (radius == 0 || !pmPortalQuadtree.containsKey(z)) {
 			addErrorNode("noRoadsExistInRange", commandNode, parametersNode);
 		} else {
 			final TreeSet<Geometry> roadsInRange = new TreeSet<Geometry>();
-			rangeHelper(new Circle2D.Double(x, y, radius),
-					pmQuadtree.getRoot(), roadsInRange, true, false);
-
+			
+			for(Integer level : pmPortalQuadtree.keySet()){
+				rangeHelper(x,y,z, radius, pmPortalQuadtree.get(level).getRoot(), roadsInRange, true, false);
+			}
+			
 			/* print out cities within range */
 			if (roadsInRange.isEmpty()) {
 				addErrorNode("noRoadsExistInRange", commandNode, parametersNode);
@@ -981,6 +999,50 @@ public class Command {
 			}
 		}
 	}
+	private double calculate3DDistance(double x1, double y1, double z1, double x2, double y2, double z2){
+		double dx = x1 - x2;
+		double dy = y1 - y2;
+		double dz = z1 - z2;
+		return Math.sqrt((dx*dx) + (dy*dy) + (dz*dz)); 
+	}
+	
+	private void rangeHelper(int x, int y, int z, int radius, Node node,
+			TreeSet<Geometry> gInRange,  final boolean includeRoads,
+			final boolean includeCities) {
+		double distance;
+		if (node.getType() == Node.BLACK) {
+			final Black leaf = (Black) node;
+			for (Geometry g : leaf.getGeometry()) {
+				if (includeCities && g.isCity() && !gInRange.contains(g)){
+					distance = calculate3DDistance(x,y,z,((City)g).getX(), ((City)g).getY(), ((City)g).getZ());
+					if(distance <= radius){
+						gInRange.add(g);
+					}
+				}
+				if (includeRoads && g.isRoad() && !gInRange.contains(g)){ 
+					int dz = Math.abs(z - ((Road) g).getZ());
+					double newRadius;
+					if(dz <= radius){
+						if(dz == 0){
+							newRadius = radius;
+						} else {
+							newRadius = Math.sqrt((radius*radius) - (dz*dz));
+						}
+					
+						if(((Road)g).toLine2D().ptSegDist(x,y) <= newRadius){
+							gInRange.add(g);
+						}
+					}
+				}
+			}
+		} else if (node.getType() == Node.GRAY) {
+			final Gray internal = (Gray) node;
+			for (int i = 0; i < 4; i++) {
+				rangeHelper(x,y,z, radius, internal.getChild(i), gInRange, includeRoads, includeCities);
+			}
+		}
+	}
+	
 
 	/**
 	 * Helper function for both rangeCities and rangeRoads
@@ -1037,19 +1099,21 @@ public class Command {
 		/* extract attribute values from command */
 		final int x = processIntegerAttribute(node, "x", parametersNode);
 		final int y = processIntegerAttribute(node, "y", parametersNode);
-
+		final int z = processIntegerAttribute(node, "z", parametersNode);
+		
 		final Point2D.Float point = new Point2D.Float(x, y);
-
-		if (pmQuadtree.getNumCities() == 0) {
+		
+		
+		if (!pmPortalQuadtree.containsKey(z) || pmPortalQuadtree.get(z).getNumCities() == 0) {
 			addErrorNode("cityNotFound", commandNode, parametersNode);
 		} else {
-			addCityNode(outputNode, nearestCityHelper(point));
+			addCityNode(outputNode, nearestCityHelper(point, z));
 			addSuccessNode(commandNode, parametersNode, outputNode);
 		}
 	}
 
-	private City nearestCityHelper(Point2D.Float point) {
-		Node n = pmQuadtree.getRoot();
+	private City nearestCityHelper(Point2D.Float point, int z) {
+		Node n = pmPortalQuadtree.get(z).getRoot();
 		PriorityQueue<NearestSearchRegion> nearCities = new PriorityQueue<NearestSearchRegion>();
 
 		if (n.getType() == Node.BLACK) {
@@ -1333,41 +1397,50 @@ public class Command {
 
 		final String name = processStringAttribute(node, "name", parametersNode);
 		final Element outputNode = results.createElement("output");
-	
+		
+		
 		
 		if (!citiesByName.containsKey(name)){
-			addErrorNode("CityDoesNotExist", commandNode, parametersNode);
+			addErrorNode("cityDoesNotExist", commandNode, parametersNode);
 		} else {
+			
 			City city = citiesByName.get(name);
 			final int z = city.getZ();
-			
-			try {
-				
-				TreeSet<Road> removedRoads = pmPortalQuadtree.get(z).removeCity(city);
-				citiesByName.remove(name);
-				Element cityUnmappedNode = results.createElement("cityUnmapped");
-				cityUnmappedNode.setAttribute("color", city.getColor());
-				cityUnmappedNode.setAttribute("name", city.getName());
-				cityUnmappedNode.setAttribute("radius", String.valueOf(city.getRadius()));
-				cityUnmappedNode.setAttribute("x", String.valueOf(city.getX()));
-				cityUnmappedNode.setAttribute("y", String.valueOf(city.getY()));
-				cityUnmappedNode.setAttribute("z", String.valueOf(city.getZ()));
-				outputNode.appendChild(cityUnmappedNode);
-				
-				for(Road r : removedRoads){
-					Element roadUnmappedNode = results.createElement("roadUnmapped");
-					roadUnmappedNode.setAttribute("end", r.getEnd().getName());
-					roadUnmappedNode.setAttribute("start", r.getStart().getName());
-					outputNode.appendChild(roadUnmappedNode);
+			if(pmPortalQuadtree.containsKey(z)){
+				try {
+					TreeSet<Road> removedRoads = null;
+					citiesByName.remove(name);
+					
+					if(pmPortalQuadtree.get(z).containsCity(name)){
+						removedRoads = pmPortalQuadtree.get(z).removeCity(city);
+						Element cityUnmappedNode = results.createElement("cityUnmapped");
+						cityUnmappedNode.setAttribute("color", city.getColor());
+						cityUnmappedNode.setAttribute("name", city.getName());
+						cityUnmappedNode.setAttribute("radius", String.valueOf(city.getRadius()));
+						cityUnmappedNode.setAttribute("x", String.valueOf(city.getX()));
+						cityUnmappedNode.setAttribute("y", String.valueOf(city.getY()));
+						cityUnmappedNode.setAttribute("z", String.valueOf(city.getZ()));
+						outputNode.appendChild(cityUnmappedNode);
+					}
+					if(removedRoads != null){
+						for(Road r : removedRoads){
+							Element roadUnmappedNode = results.createElement("roadUnmapped");
+							roadUnmappedNode.setAttribute("end", r.getEnd().getName());
+							roadUnmappedNode.setAttribute("start", r.getStart().getName());
+							outputNode.appendChild(roadUnmappedNode);
+						}
+					}
+					
+					addSuccessNode(commandNode, parametersNode, outputNode);
+				} catch (CityNotMappedThrowable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RoadNotMappedThrowable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				
-				addSuccessNode(commandNode, parametersNode, outputNode);
-			} catch (CityNotMappedThrowable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (RoadNotMappedThrowable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} else {
+				addErrorNode("cityDoesNotExist", commandNode, parametersNode);
 			}
 		}
 	}

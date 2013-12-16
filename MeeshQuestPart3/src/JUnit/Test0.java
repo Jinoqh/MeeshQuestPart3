@@ -60,13 +60,12 @@ public class Test0 extends TestCase{
     
     @Test
     public void testGuarded(){
-    	int x = 3;
-    	
-    	if(x == 3){
-    		System.out.println("YOLO");
-    	} else if (x == 3){
-    		System.out.println("TROLLOR");
-    	}
+    	GuardedAvlGTree<String, Integer> testTree = new GuardedAvlGTree<String, Integer>(String.CASE_INSENSITIVE_ORDER, 2);
+    	testTree.put("a", 1);
+    	testTree.put("b", 2);
+    	testTree.remove("a");
+    	System.out.println(testTree.entrySet());
+    	testTree.sweep();
     }
     
  

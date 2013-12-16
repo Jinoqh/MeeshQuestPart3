@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
 import cmsc420.geom.Inclusive2DIntersectionVerifier;
@@ -309,6 +310,10 @@ public abstract class PMQuadtree {
 					geometry.remove(((Road)g).getEnd());
 					numPoints--;	
 				}
+				
+				if(numPoints < 0){
+					numPoints = 0;
+				}
 			} 
 			
 			if(geometry.isEmpty() && !portalExists()){
@@ -441,8 +446,12 @@ public abstract class PMQuadtree {
 		 * @return the city if it exists, else <code>null</code>
 		 */
 		public City getCity() {
-			final Geometry g = geometry.getFirst();
-			return g.isCity() ? (City)g : null;
+			try {
+				final Geometry g = geometry.getFirst();
+				return g.isCity() ? (City)g : null;
+			} catch (NoSuchElementException e){
+				return null;
+			}
 		}
 
 		public boolean portalExists() {
@@ -811,6 +820,11 @@ public abstract class PMQuadtree {
 			throw new RoadAlreadyExistsThrowable();
 		}
 		
+		Rectangle2D.Float world = new Rectangle2D.Float(spatialOrigin.x, spatialOrigin.y,spatialWidth, spatialHeight);
+		if (!Inclusive2DIntersectionVerifier.intersects(g.toLine2D(), world)) {
+			throw new OutOfBoundsThrowable();
+		}
+		
 		for (Road r : allRoads) {
 			if (Inclusive2DIntersectionVerifier.intersects(r.toLine2D(),g.toLine2D())) {			
 				if (!Inclusive2DIntersectionVerifier.intersects(g.getStart().toPoint2D(), r.toLine2D())
@@ -820,10 +834,6 @@ public abstract class PMQuadtree {
 			}
 		}
 		
-		Rectangle2D.Float world = new Rectangle2D.Float(spatialOrigin.x, spatialOrigin.y,spatialWidth, spatialHeight);
-		if (!Inclusive2DIntersectionVerifier.intersects(g.toLine2D(), world)) {
-			throw new OutOfBoundsThrowable();
-		}
  
 		if (Inclusive2DIntersectionVerifier.intersects(g.getStart().toPoint2D(), world)) {
 			increaseNumRoadsMap(g.getStart().getName());
@@ -838,7 +848,7 @@ public abstract class PMQuadtree {
 		} catch (InvalidPartitionThrowable e){
 			try {
 				this.removeRoad(g);
-				allRoads.remove(g);
+//				allRoads.remove(g);
 			} catch (RoadNotMappedThrowable e1) {
 				
 			}

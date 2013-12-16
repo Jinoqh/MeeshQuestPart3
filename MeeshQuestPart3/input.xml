@@ -1,280 +1,1146 @@
-<commands 
+
+<commands
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:noNamespaceSchemaLocation="part3in.xsd" 
-spatialWidth="64" 
-spatialHeight="64" 
-pmOrder="3" 
-g="3"> 
-<createCity name="A" x="1" y="1" radius="50" color="red" id="1" z="1"/> 
-<createCity name="B" x="63" y="63" radius="80" color="orange" id="2" z="1"/> 
-<createCity name="C" radius="5" x="1" y="63" color="yellow" id="3" z="1"/> 
-<createCity name="D" radius="5" x="63" y="1" color="yellow" id="4" z="1"/> 
-<createCity name="E" radius="5" x="32" y="32" color="blue" id ="5" z="1"/> 
-<createCity name="F" x="3" y="30" radius="50" color="red" id="6" z="1"/> 
-<createCity name="G" x="30" y="62" radius="80" color="orange" id="7" z="1"/> 
-<createCity name="H" radius="5" x="34" y="2" color="yellow" id="8" z="1"/> 
-<createCity name="I" radius="5" x="62" y="34" color="yellow" id="9" z="1"/> 
-<createCity name="J" radius="5" x="3" y="16" color="blue" id ="10" z="1"/> 
-<createCity name="K" x="16" y="60" radius="50" color="red" id="11" z="1"/> 
-<createCity name="L" x="60" y="48" radius="80" color="orange" id="12" z="1"/> 
-<createCity name="M" radius="5" x="48" y="4" color="yellow" id="13" z="1"/> 
-<createCity name="N" radius="5" x="16" y="16" color="yellow" id="14" z="1"/> 
-<createCity name="O" radius="5" x="16" y="48" color="blue" id ="15" z="1"/> 
-<createCity name="P" x="48" y="48" radius="50" color="red" id="16" z="1"/> 
-<createCity name="Q" x="48" y="16" radius="80" color="orange" id="17" z="1"/> 
-<createCity name="R" radius="5" x="20" y="16" color="yellow" id="18" z="1"/> 
-<createCity name="S" radius="5" x="16" y="44" color="yellow" id="19" z="1"/> 
-<createCity name="T" radius="5" x="44" y="56" color="blue" id ="20" z="1"/> 
-<createCity name="U" x="56" y="20" radius="50" color="red" id="21" z="1"/> 
-<createCity name="V" x="32" y="65" radius="80" color="orange" id="22" z="1"/> 
-<createCity name="W" radius="5" x="65" y="32" color="yellow" id="23" z="1"/> 
-<createCity name="X" radius="5" x="65" y="30" color="yellow" id="24" z="1"/> 
-<createCity name="Y" radius="5" x="0" y="3" color="yellow" id="25" z="1"/> 
-<createCity name="Z" radius="5" x="0" y="5" color="yellow" id="26" z="1"/> 
-<createCity name="VIO" radius="5" x="0" y="1" color="yellow" id="26" z="1"/>
-<createCity name="OUT" radius="5" x="70" y="70" color="yellow" id="26" z="1"/>
-<createCity name="OUT2" radius="5" x="60" y="70" color="yellow" id="26" z="1"/>
+xsi:noNamespaceSchemaLocation="part3in.xsd" spatialWidth="1024"
+spatialHeight="1024" g="3" pmOrder="1">
+<createCity x="541" y="405" z="2" color="black" radius="5" name="JIVD"/>
+<createCity x="385" y="224" z="0" color="black" radius="5" name="NHJL"/>
+<createCity x="894" y="246" z="1" color="black" radius="5" name="IKUZ"/>
+<createCity x="253" y="551" z="0" color="black" radius="5" name="SOGH"/>
+<createCity x="806" y="160" z="0" color="black" radius="5" name="GYGE"/>
+<createCity x="534" y="129" z="1" color="black" radius="5" name="EXFG"/>
+<createCity x="615" y="85" z="1" color="black" radius="5" name="SXXZ"/>
+<createCity x="52" y="308" z="0" color="black" radius="5" name="HXSU"/>
+<createCity x="651" y="978" z="1" color="black" radius="5" name="ZOHG"/>
+<createCity x="273" y="571" z="2" color="black" radius="5" name="HARU"/>
+<createCity x="650" y="474" z="2" color="black" radius="5" name="PZCM"/>
+<createCity x="104" y="423" z="2" color="black" radius="5" name="TYEA"/>
+<createCity x="396" y="236" z="0" color="black" radius="5" name="ZHQA"/>
+<createCity x="837" y="178" z="1" color="black" radius="5" name="SDDE"/>
+<createCity x="988" y="271" z="2" color="black" radius="5" name="MTCH"/>
+<createCity x="483" y="301" z="0" color="black" radius="5" name="CCXD"/>
+<createCity x="672" y="716" z="1" color="black" radius="5" name="IALC"/>
+<createCity x="863" y="899" z="1" color="black" radius="5" name="KPRZ"/>
+<createCity x="956" y="3" z="0" color="black" radius="5" name="USFM"/>
+<createCity x="289" y="702" z="2" color="black" radius="5" name="HUKS"/>
+<createCity x="589" y="438" z="0" color="black" radius="5" name="PQYO"/>
+<createCity x="145" y="81" z="2" color="black" radius="5" name="IDBY"/>
+<createCity x="909" y="803" z="1" color="black" radius="5" name="HTEE"/>
+<createCity x="512" y="647" z="2" color="black" radius="5" name="QXCY"/>
+<createCity x="132" y="978" z="0" color="black" radius="5" name="EVAW"/>
+<createCity x="309" y="662" z="2" color="black" radius="5" name="NWCA"/>
+<createCity x="270" y="975" z="1" color="black" radius="5" name="JMTO"/>
+<createCity x="973" y="606" z="1" color="black" radius="5" name="KYCL"/>
+<createCity x="236" y="7" z="2" color="black" radius="5" name="YFII"/>
+<createCity x="935" y="974" z="1" color="black" radius="5" name="IKHB"/>
+<listCities sortBy="name"/>
+<listCities sortBy="coordinate"/>
+<rangeRoads x="100" y="200" z="1" radius="50" saveMap="rangeRoadMap"/>
+<rangeRoads x="100" y="200" z="1" radius="50"/>
+<rangeCities x="100" y="200" z="1" radius="50" saveMap="rangeCitiesMap"/>
+<rangeCities x="100" y="200" z="1" radius="50"/>
+<mapRoad start="ZOHG" end="IALC"/>
 
-<createCity name="A2" x="1" y="1" radius="50" color="red" id="1" z="2"/> 
-<createCity name="B2" x="63" y="63" radius="80" color="orange" id="2" z="2"/> 
-<createCity name="C2" radius="5" x="1" y="63" color="yellow" id="3" z="2"/> 
-<createCity name="D2" radius="5" x="63" y="1" color="yellow" id="4" z="2"/> 
-<createCity name="E2" radius="5" x="32" y="32" color="blue" id ="5" z="2"/> 
-<createCity name="F2" x="3" y="30" radius="50" color="red" id="6" z="2"/> 
-<createCity name="G2" x="30" y="62" radius="80" color="orange" id="7" z="2"/> 
-<createCity name="H2" radius="5" x="34" y="2" color="yellow" id="8" z="2"/> 
-<createCity name="I2" radius="5" x="62" y="34" color="yellow" id="9" z="2"/> 
-<createCity name="J2" radius="5" x="3" y="16" color="blue" id ="10" z="2"/> 
-<createCity name="K2" x="16" y="60" radius="50" color="red" id="11" z="2"/> 
-<createCity name="L2" x="60" y="48" radius="80" color="orange" id="12" z="2"/> 
-<createCity name="M2" radius="5" x="48" y="4" color="yellow" id="13" z="2"/> 
-<createCity name="N2" radius="5" x="16" y="16" color="yellow" id="14" z="2"/> 
-<createCity name="O2" radius="5" x="16" y="48" color="blue" id ="15" z="2"/> 
-<createCity name="P2" x="48" y="48" radius="50" color="red" id="16" z="2"/> 
-<createCity name="Q2" x="48" y="16" radius="80" color="orange" id="17" z="2"/> 
-<createCity name="R2" radius="5" x="20" y="16" color="yellow" id="18" z="2"/> 
-<createCity name="S2" radius="5" x="16" y="44" color="yellow" id="19" z="2"/> 
-<createCity name="T2" radius="5" x="44" y="56" color="blue" id ="20" z="2"/> 
-<createCity name="U2" x="56" y="20" radius="50" color="red" id="21" z="2"/> 
-<createCity name="V2" x="32" y="65" radius="80" color="orange" id="22" z="2"/> 
-<createCity name="W2" radius="5" x="65" y="32" color="yellow" id="23" z="2"/> 
-<createCity name="X2" radius="5" x="65" y="30" color="yellow" id="24" z="2"/> 
-<createCity name="Y2" radius="5" x="0" y="3" color="yellow" id="25" z="2"/> 
-<createCity name="Z2" radius="5" x="0" y="5" color="yellow" id="26" z="2"/> 
+<mapRoad start="JIVD" end="IDBY"/>
 
-<printPMQuadtree z="1" id="25"/> 
-<mapRoad start="A" end="C" id="26"/> 
-<mapRoad start="B" end="D" id="28"/> 
-<mapRoad start="M" end="H" id="30"/> 
-<mapRoad start="J" end="F" id="31"/> 
-<mapRoad start="N" end="R" id="33"/> 
-<mapRoad start="S" end="O" id="35"/> 
-<mapRoad start="G" end="K" id="37"/>
+<mapRoad start="TYEA" end="TYEA"/>
 
+<mapRoad start="ZOHG" end="ZOHG"/>
 
-<mapPortal name="PP" x="20" y="2" z="1"/>
+<mapRoad start="SXXZ" end="IKHB"/>
 
-<mapRoad start="SSS" end="K" id="37"/>
-<mapRoad start="G" end="SSS" id="37"/>
-<mapRoad start="G" end="G" id="37"/>
-<mapRoad start="G2" end="G" id="37"/>
-<mapRoad start="PP" end="A" id="37"/>
-<mapRoad start="G" end="K" id="37"/>
-<mapRoad start="OUT" end="OUT2" id="37"/>
-<mapRoad start="A" end="B" id="37"/>
-<mapRoad start="VIO" end="A" id="37"/>
+<mapRoad start="IKUZ" end="SXXZ"/>
 
-<unmapRoad start="SSS" end="A" id="37"/>
-<unmapRoad start="A" end="SSS" id="37"/>
-<unmapRoad start="A" end="A" id="37"/>
-<unmapRoad start="Z" end="Y" id="37"/>
+<mapRoad start="ZHQA" end="USFM"/>
 
-<mapPortal name="PORT" x="12" y="2" z="1"/>
-<mapPortal name="PP" x="1" y="1" z="2"/>
-<unmapPortal name="PP"/>
+<mapRoad start="JMTO" end="HARU"/>
 
-<mapPortal name="PP" x="1" y="1" z="2"/>
-<mapPortal name="PP" x="80" y="80" z="1"/>
-<mapPortal name="PP" x="1" y="15" z="1"/>
-<mapPortal name="PP" x="2" y="1" z="1"/>
+<mapRoad start="PZCM" end="MTCH"/>
 
-<unmapPortal name="ZZZ"/>
+<mapRoad start="QXCY" end="HARU"/>
 
-<mapPortal name="PP" x="20" y="2" z="1"/>
+<mapRoad start="JIVD" end="TYEA"/>
 
-<unmapPortal name="PA"/>
+<mapRoad start="IALC" end="HTEE"/>
 
- 
-<mapRoad start="T" end="P" id="39"/> 
-<mapRoad start="I" end="L" id="41"/> 
-<mapRoad start="U" end="Q" id="43"/> 
-<mapRoad start="W" end="X" id="45"/> 
-<mapRoad start="V" end="E" id="47"/>  
-<mapRoad start="Y" end="Z" id="51"/> 
+<mapRoad start="JIVD" end="HARU"/>
 
-<mapRoad start="K" end="C" id="26"/> 
-<mapRoad start="C" end="O" id="28"/>  
-<mapRoad start="C" end="S" id="30"/> 
-<mapRoad start="E" end="S" id="31"/>
-<mapRoad start="N" end="F" id="33"/> 
-<mapRoad start="A" end="N" id="35"/> 
-<mapRoad start="G" end="K" id="37"/> 
-<mapRoad start="R" end="H" id="39"/> 
-<mapRoad start="Q" end="M" id="41"/> 
-<mapRoad start="U" end="D" id="43"/> 
-<mapRoad start="L" end="B" id="45"/> 
-<mapRoad start="P" end="E" id="47"/> 
-<mapRoad start="T" end="G" id="51"/> 
-<printPMQuadtree id="52" z="1"/>
+<mapRoad start="PZCM" end="PZCM"/>
 
+<mapRoad start="HTEE" end="SXXZ"/>
 
-<printPMQuadtree z="2" id="25"/> 
-<mapRoad start="A2" end="C2" id="26"/> 
-<mapRoad start="B2" end="D2" id="28"/> 
-<mapRoad start="M2" end="H2" id="30"/> 
-<mapRoad start="J2" end="F2" id="31"/> 
-<mapRoad start="N2" end="R2" id="33"/> 
-<mapRoad start="S2" end="O2" id="35"/> 
-<mapRoad start="G2" end="K2" id="37"/>
+<mapRoad start="SXXZ" end="EXFG"/>
 
-<mapPortal name="PPP" x="20" y="2" z="2"/>
- 
-<mapRoad start="T2" end="P2" id="39"/> 
-<mapRoad start="I2" end="L2" id="41"/> 
-<mapRoad start="U2" end="Q2" id="43"/> 
-<mapRoad start="W2" end="X2" id="45"/> 
-<mapRoad start="V2" end="E2" id="47"/>  
-<mapRoad start="Y2" end="Z2" id="51"/> 
+<mapRoad start="IDBY" end="QXCY"/>
 
-<mapRoad start="K2" end="C2" id="26"/> 
-<mapRoad start="C2" end="O2" id="28"/>  
-<mapRoad start="C2" end="S2" id="30"/> 
-<mapRoad start="E2" end="S2" id="31"/>
-<mapRoad start="N2" end="F2" id="33"/> 
-<mapRoad start="A2" end="N2" id="35"/> 
-<mapRoad start="G2" end="K2" id="37"/> 
-<mapRoad start="R2" end="H2" id="39"/> 
-<mapRoad start="Q2" end="M2" id="41"/> 
-<mapRoad start="U2" end="D2" id="43"/> 
-<mapRoad start="L2" end="B2" id="45"/> 
-<mapRoad start="P2" end="E2" id="47"/> 
-<mapRoad start="T2" end="G2" id="51"/> 
-<printPMQuadtree id="52" z="2"/>
+<mapRoad start="KYCL" end="ZOHG"/>
 
+<mapRoad start="EVAW" end="NHJL"/>
 
-<unmapRoad start="A" end="C" id="26"/> 
-<printPMQuadtree id="52" z="1"/>
-<unmapRoad start="B" end="D" id="28"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="M" end="H" id="30"/> 
-<printPMQuadtree id="52" z="1"/>
-<unmapRoad start="J" end="F" id="31"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="N" end="R" id="33"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="S" end="O" id="35"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="G" end="K" id="37"/> 
-<printPMQuadtree id="52" z="1"/>
-<unmapRoad start="T" end="P" id="39"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="I" end="L" id="41"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="U" end="Q" id="43"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="W" end="X" id="45"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="V" end="E" id="47"/>
-<printPMQuadtree id="52" z="1"/>  
-<unmapRoad start="Y" end="Z" id="51"/> 
+<mapRoad start="JIVD" end="PZCM"/>
 
-<printPMQuadtree id="52" z="1"/>
+<mapRoad start="QXCY" end="QXCY"/>
 
+<mapRoad start="SDDE" end="EXFG"/>
 
-<unmapRoad start="A2" end="C2" id="26"/> 
-<printPMQuadtree id="52" z="2"/>
-<unmapRoad start="B2" end="D2" id="28"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="M2" end="H2" id="30"/> 
-<printPMQuadtree id="52" z="2"/>
-<unmapRoad start="J2" end="F2" id="31"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="N2" end="R2" id="33"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="S2" end="O2" id="35"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="G2" end="K2" id="37"/> 
-<printPMQuadtree id="52" z="2"/>
-<unmapRoad start="T2" end="P2" id="39"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="I2" end="L2" id="41"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="U2" end="Q2" id="43"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="W2" end="X2" id="45"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="V2" end="E2" id="47"/>
-<printPMQuadtree id="52" z="2"/>  
-<unmapRoad start="Y2" end="Z2" id="51"/> 
+<mapRoad start="IKUZ" end="SDDE"/>
 
-<printPMQuadtree id="52" z="2"/>
+<mapRoad start="KPRZ" end="KPRZ"/>
 
-<unmapPortal name="PP"/>
-<unmapPortal name="PPP"/>
+<mapRoad start="JMTO" end="KYCL"/>
 
-<unmapRoad start="K" end="C" id="26"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="C" end="O" id="28"/> 
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="C" end="S" id="30"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="E" end="S" id="31"/>
-<printPMQuadtree id="52" z="1"/>
-<unmapRoad start="N" end="F" id="33"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="A" end="N" id="35"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="G" end="K" id="37"/> 
-<printPMQuadtree id="52" z="1"/>
-<unmapRoad start="R" end="H" id="39"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="Q" end="M" id="41"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="U" end="D" id="43"/>
-<printPMQuadtree id="52" z="1"/> 
-<deleteCity name="B"/> 
-<printPMQuadtree id="52" z="1"/>
-<deleteCity name="P"/>
-<printPMQuadtree id="52" z="1"/> 
-<unmapRoad start="T" end="G" id="51"/> 
-<printPMQuadtree id="52" z="1"/>
+<mapRoad start="JMTO" end="NWCA"/>
+
+<mapRoad start="GYGE" end="NHJL"/>
+
+<mapRoad start="SXXZ" end="KPRZ"/>
+
+<mapRoad start="NWCA" end="IDBY"/>
+
+<mapRoad start="HXSU" end="HXSU"/>
+
+<mapRoad start="KPRZ" end="KPRZ"/>
+
+<mapRoad start="YFII" end="QXCY"/>
+
+<mapRoad start="EVAW" end="SOGH"/>
+
+<mapRoad start="PZCM" end="TYEA"/>
+
+<mapRoad start="IKUZ" end="IALC"/>
+
+<mapRoad start="EXFG" end="ZOHG"/>
+
+<mapRoad start="TYEA" end="NWCA"/>
+
+<mapRoad start="PZCM" end="MTCH"/>
+
+<mapRoad start="SXXZ" end="IALC"/>
+
+<mapRoad start="KYCL" end="IKUZ"/>
+
+<mapRoad start="IKUZ" end="IKHB"/>
+
+<mapRoad start="JMTO" end="HTEE"/>
+
+<mapRoad start="MTCH" end="TYEA"/>
+<rangeRoads x="50" y="0" z="1" radius="500" saveMap="rangeRoadMap2"/>
+<rangeRoads x="50" y="0" z="1" radius="500"/>
+<rangeCities x="50" y="0" z="1" radius="500" saveMap="rangeCitiesMap2"/>
+<rangeCities x="50" y="0" z="1" radius="500"/>
+<mapRoad start="HUKS" end="MTCH"/>
+
+<mapRoad start="JMTO" end="IALC"/>
+
+<mapRoad start="JIVD" end="YFII"/>
+
+<mapRoad start="NHJL" end="NHJL"/>
+
+<mapRoad start="EVAW" end="EVAW"/>
+
+<mapRoad start="QXCY" end="QXCY"/>
+
+<mapRoad start="USFM" end="USFM"/>
+
+<mapPortal x="361" y="617" z="2" name="HQDE"/>
+
+<mapRoad start="ZHQA" end="EVAW"/>
+
+<mapRoad start="SOGH" end="PQYO"/>
+
+<mapRoad start="IALC" end="KPRZ"/>
+
+<mapRoad start="JMTO" end="SDDE"/>
+
+<mapRoad start="YFII" end="NWCA"/>
+
+<mapRoad start="YFII" end="PZCM"/>
+
+<mapRoad start="ZHQA" end="ZHQA"/>
+
+<mapRoad start="ZHQA" end="ZHQA"/>
+
+<mapRoad start="SDDE" end="KYCL"/>
+
+<mapRoad start="EXFG" end="JMTO"/>
+
+<mapRoad start="KPRZ" end="KYCL"/>
+
+<mapRoad start="JMTO" end="QXCY"/>
+
+<mapRoad start="HXSU" end="HXSU"/>
+
+<mapRoad start="PZCM" end="HUKS"/>
+
+<mapRoad start="MTCH" end="PZCM"/>
+
+<mapRoad start="ZHQA" end="EVAW"/>
+
+<mapRoad start="MTCH" end="MTCH"/>
+
+<mapRoad start="NWCA" end="NWCA"/>
+
+<mapRoad start="NWCA" end="NWCA"/>
+
+<mapRoad start="NHJL" end="USFM"/>
+
+<mapRoad start="IDBY" end="NWCA"/>
+
+<mapRoad start="ZOHG" end="KYCL"/>
+
+<mapRoad start="HXSU" end="USFM"/>
+
+<mapRoad start="HXSU" end="PQYO"/>
+
+<mapRoad start="HARU" end="PZCM"/>
+
+<mapRoad start="ZHQA" end="PQYO"/>
+
+<mapRoad start="HTEE" end="SDDE"/>
+
+<mapRoad start="IKHB" end="KPRZ"/>
+
+<mapRoad start="HXSU" end="NHJL"/>
+
+<mapRoad start="HUKS" end="HARU"/>
+
+<rangeRoads x="1050" y="0" z="0" radius="200"/>
+<rangeCities x="1050" y="0" z="0" radius="200"/>
+
+<createCity x="175" y="719" z="2" color="black" radius="5" name="NROO"/>
+<createCity x="511" y="605" z="1" color="black" radius="5" name="GUKY"/>
+<createCity x="392" y="940" z="1" color="black" radius="5" name="NJDX"/>
+<createCity x="735" y="599" z="0" color="black" radius="5" name="YDCV"/>
+<createCity x="358" y="1021" z="1" color="black" radius="5" name="XGKK"/>
+<createCity x="764" y="95" z="0" color="black" radius="5" name="PLKM"/>
+<createCity x="459" y="562" z="2" color="black" radius="5" name="OTNK"/>
+<createCity x="1005" y="714" z="2" color="black" radius="5" name="USVP"/>
+<createCity x="586" y="63" z="1" color="black" radius="5" name="SLMZ"/>
+<createCity x="828" y="110" z="2" color="black" radius="5" name="YIWM"/>
 
 
-<unmapRoad start="K2" end="C2" id="26"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="C2" end="O2" id="28"/> 
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="C2" end="S2" id="30"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="E2" end="S2" id="31"/>
-<printPMQuadtree id="52" z="2"/>
-<unmapRoad start="N2" end="F2" id="33"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="A2" end="N2" id="35"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="G2" end="K2" id="37"/> 
-<printPMQuadtree id="52" z="2"/>
-<unmapRoad start="R2" end="H2" id="39"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="Q2" end="M2" id="41"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="U2" end="D2" id="43"/>
-<printPMQuadtree id="52" z="2"/> 
-<deleteCity name="B2"/> 
-<printPMQuadtree id="52" z="2"/>
-<deleteCity name="P2"/>
-<printPMQuadtree id="52" z="2"/> 
-<unmapRoad start="T2" end="G2" id="51"/> 
-<printPMQuadtree id="52" z="2"/>
+<mapPortal x="178" y="299" z="1" name="THST"/>
+
+<mapPortal x="739" y="12" z="2" name="HLWE"/>
+
+<mapRoad start="GYGE" end="PLKM"/>
+
+<mapRoad start="PZCM" end="YFII"/>
+
+<mapRoad start="HUKS" end="USFM"/>
+
+<mapRoad start="PQYO" end="KYCL"/>
+
+<mapRoad start="KYCL" end="KPRZ"/>
+
+<mapRoad start="HARU" end="PZCM"/>
+
+<mapRoad start="PLKM" end="CCXD"/>
+
+<mapRoad start="IDBY" end="OTNK"/>
+
+<mapRoad start="SDDE" end="HTEE"/>
+
+<mapRoad start="KYCL" end="SDDE"/>
+
+<mapRoad start="PLKM" end="HXSU"/>
+
+<mapRoad start="NWCA" end="NWCA"/>
+
+<mapRoad start="SOGH" end="EVAW"/>
+
+<mapRoad start="HTEE" end="JMTO"/>
+
+<mapRoad start="GUKY" end="EXFG"/>
+
+<rangeRoads x="600" y="0" z="2" radius="240"/>
+<rangeCities x="600" y="0" z="2" radius="240"/>
+<mapRoad start="HARU" end="QXCY"/>
+
+<mapRoad start="PLKM" end="ZHQA"/>
+
+<mapRoad start="ZHQA" end="USFM"/>
+
+<mapRoad start="SLMZ" end="JMTO"/>
+
+<mapRoad start="PLKM" end="YFII"/>
+
+<mapRoad start="IKUZ" end="GUKY"/>
+
+<mapRoad start="EVAW" end="EVAW"/>
+
+<mapRoad start="ZOHG" end="HTEE"/>
+
+<mapRoad start="XGKK" end="JMTO"/>
+
+<mapRoad start="PQYO" end="ZHQA"/>
+<printPMQuadtree z="1"/>
+<mapRoad start="PLKM" end="ZHQA"/>
+
+<mapRoad start="EXFG" end="ZOHG"/>
+
+<mapRoad start="CCXD" end="SOGH"/>
+
+<mapRoad start="HUKS" end="JIVD"/>
+
+<mapRoad start="KYCL" end="ZOHG"/>
+
+
+<mapRoad start="HARU" end="PZCM"/>
+
+<mapRoad start="IKUZ" end="SLMZ"/>
+
+<mapRoad start="JMTO" end="XGKK"/>
+
+<mapRoad start="EVAW" end="PQYO"/>
+
+<mapRoad start="NWCA" end="JIVD"/>
+
+<mapRoad start="PQYO" end="ZHQA"/>
+
+<mapRoad start="NHJL" end="GYGE"/>
+
+<mapRoad start="USFM" end="ZHQA"/>
+
+<mapRoad start="TYEA" end="OTNK"/>
+
+<mapRoad start="KPRZ" end="NWCA"/>
+
+<mapRoad start="NWCA" end="JIVD"/>
+
+<mapRoad start="XGKK" end="GUKY"/>
+
+<mapRoad start="QXCY" end="HARU"/>
+
+<mapRoad start="KYCL" end="JMTO"/>
+
+<mapRoad start="ZOHG" end="SLMZ"/>
+
+<mapRoad start="IKHB" end="XGKK"/>
+
+<mapRoad start="IDBY" end="USVP"/>
+
+<mapRoad start="IKHB" end="KPRZ"/>
+
+<mapRoad start="IALC" end="KPRZ"/>
+
+<mapRoad start="MTCH" end="SOGH"/>
+
+<mapRoad start="GUKY" end="XGKK"/>
+
+<mapRoad start="OTNK" end="YIWM"/>
+
+<mapRoad start="SDDE" end="HTEE"/>
+
+<mapRoad start="USFM" end="PLKM"/>
+
+<mapRoad start="NHJL" end="YDCV"/>
+
+<mapRoad start="PZCM" end="IALC"/>
+
+<mapRoad start="SOGH" end="EVAW"/>
+
+<mapRoad start="JIVD" end="YIWM"/>
+
+<mapRoad start="IKHB" end="IALC"/>
+
+<mapRoad start="SLMZ" end="GUKY"/>
+
+<printPMQuadtree z="1"/>
+<mapPortal x="525" y="504" z="0" name="BGFJ"/>
+<printPMQuadtree z="1"/>
+
+<mapPortal x="540" y="1007" z="0" name="OYWE"/>
+
+<mapRoad start="NHJL" end="SXXZ"/>
+
+<mapRoad start="SXXZ" end="IALC"/>
+
+<mapRoad start="SOGH" end="PQYO"/>
+
+<mapRoad start="IDBY" end="HUKS"/>
+
+<mapRoad start="PZCM" end="TYEA"/>
+
+<mapRoad start="IALC" end="IKUZ"/>
+
+<mapRoad start="USVP" end="PZCM"/>
+
+<mapRoad start="NWCA" end="MTCH"/>
+
+<mapRoad start="KPRZ" end="SXXZ"/>
+
+<mapRoad start="NJDX" end="KPRZ"/>
+
+<mapRoad start="YDCV" end="ZHQA"/>
+
+<mapRoad start="YDCV" end="PLKM"/>
+
+<mapRoad start="NHJL" end="YDCV"/>
+
+<mapRoad start="EXFG" end="XGKK"/>
+
+<mapRoad start="USVP" end="NWCA"/>
+
+<mapRoad start="NHJL" end="NHJL"/>
+
+<mapRoad start="EVAW" end="GYGE"/>
+
+<mapRoad start="IKUZ" end="NJDX"/>
+
+<mapRoad start="GUKY" end="KYCL"/>
+
+<mapRoad start="EXFG" end="JMTO"/>
+
+<mapRoad start="ZOHG" end="JMTO"/>
+
+<mapRoad start="ZOHG" end="GUKY"/>
+
+<mapRoad start="USVP" end="GYGE"/>
+
+<mapRoad start="NHJL" end="USFM"/>
+
+<mapRoad start="YFII" end="OTNK"/>
+
+<mapRoad start="SLMZ" end="NHJL"/>
+
+<mapRoad start="IKHB" end="IKHB"/>
+
+<mapRoad start="OTNK" end="NROO"/>
+
+<mapRoad start="NWCA" end="NWCA"/>
+
+<mapRoad start="NHJL" end="ZHQA"/>
+
+
+<createCity x="880" y="676" z="2" color="black" radius="5" name="GAAG"/>
+<createCity x="945" y="649" z="2" color="black" radius="5" name="CTAF"/>
+<createCity x="51" y="1019" z="1" color="black" radius="5" name="PTEA"/>
+<createCity x="728" y="8" z="1" color="black" radius="5" name="QOMH"/>
+<createCity x="657" y="142" z="1" color="black" radius="5" name="XSAU"/>
+<createCity x="593" y="41" z="0" color="black" radius="5" name="HWHR"/>
+<createCity x="961" y="408" z="1" color="black" radius="5" name="YTBP"/>
+<createCity x="151" y="814" z="0" color="black" radius="5" name="BROH"/>
+<createCity x="574" y="218" z="2" color="black" radius="5" name="OGVQ"/>
+<createCity x="110" y="200" z="1" color="black" radius="5" name="DBCK"/>
+<printPMQuadtree z="0"/>
+<mapPortal x="118" y="372" z="0" name="BRKH"/>
+<printPMQuadtree z="0"/>
+
+<mapRoad start="ZOHG" end="JMTO"/>
+
+<mapRoad start="ZHQA" end="CCXD"/>
+
+<mapRoad start="ZHQA" end="GYGE"/>
+
+<mapRoad start="NJDX" end="EXFG"/>
+
+<mapRoad start="CTAF" end="CTAF"/>
+
+<mapRoad start="DBCK" end="KYCL"/>
+
+<mapRoad start="QOMH" end="YTBP"/>
+
+<mapRoad start="BROH" end="EVAW"/>
+
+<mapRoad start="HWHR" end="YDCV"/>
+
+<mapRoad start="SXXZ" end="JMTO"/>
+
+<mapRoad start="YFII" end="OGVQ"/>
+
+<mapRoad start="MTCH" end="OGVQ"/>
+
+<mapRoad start="DBCK" end="IKUZ"/>
+
+<mapRoad start="TYEA" end="NWCA"/>
+
+<mapRoad start="SXXZ" end="XGKK"/>
+
+<mapRoad start="JMTO" end="GUKY"/>
+
+<mapRoad start="IKUZ" end="XGKK"/>
+
+<mapRoad start="PLKM" end="PZCM"/>
+
+<mapRoad start="PTEA" end="ZOHG"/>
+
+<mapRoad start="NHJL" end="NHJL"/>
+
+<mapRoad start="ZHQA" end="USFM"/>
+
+<mapRoad start="QOMH" end="SLMZ"/>
+
+<mapRoad start="SOGH" end="CCXD"/>
+
+<mapRoad start="SDDE" end="SLMZ"/>
+
+<mapRoad start="HWHR" end="EVAW"/>
+
+<mapRoad start="OGVQ" end="JIVD"/>
+
+<mapRoad start="QOMH" end="ZOHG"/>
+
+<mapRoad start="NJDX" end="HTEE"/>
+
+<mapRoad start="HTEE" end="SLMZ"/>
+
+<mapRoad start="YTBP" end="SXXZ"/>
+
+<rangeRoads x="500" y="500" z="1" radius="200"/>
+<rangeCities x="500" y="500" z="1" radius="200"/>
+
+<createCity x="61" y="274" z="2" color="black" radius="5" name="CEXA"/>
+<createCity x="330" y="814" z="1" color="black" radius="5" name="SDMS"/>
+<createCity x="301" y="640" z="2" color="black" radius="5" name="WYSO"/>
+<createCity x="624" y="260" z="1" color="black" radius="5" name="PQLY"/>
+<createCity x="996" y="889" z="1" color="black" radius="5" name="SACD"/>
+<createCity x="664" y="526" z="0" color="black" radius="5" name="MUWY"/>
+<createCity x="272" y="937" z="1" color="black" radius="5" name="NZVZ"/>
+<createCity x="497" y="165" z="1" color="black" radius="5" name="CZAQ"/>
+<createCity x="749" y="1007" z="2" color="black" radius="5" name="SMFN"/>
+<createCity x="459" y="710" z="2" color="black" radius="5" name="HBGS"/>
+
+<mapPortal x="583" y="501" z="2" name="DBPU"/>
+<mapRoad start="GAAG" end="YIWM"/>
+
+<mapRoad start="PZCM" end="HARU"/>
+
+<mapRoad start="ZHQA" end="PZCM"/>
+
+<mapRoad start="SLMZ" end="XSAU"/>
+
+<mapRoad start="HWHR" end="PQYO"/>
+
+<mapRoad start="SOGH" end="NHJL"/>
+
+<mapRoad start="HARU" end="JIVD"/>
+
+<mapRoad start="YDCV" end="BROH"/>
+
+<mapRoad start="EXFG" end="PQLY"/>
+
+<mapRoad start="SDMS" end="HTEE"/>
+
+<mapRoad start="OTNK" end="MTCH"/>
+
+<mapRoad start="MTCH" end="OGVQ"/>
+
+<mapRoad start="TYEA" end="TYEA"/>
+
+<mapRoad start="SXXZ" end="YTBP"/>
+
+<mapRoad start="JMTO" end="IKHB"/>
+
+<mapRoad start="SDMS" end="KPRZ"/>
+
+<mapRoad start="SDDE" end="YTBP"/>
+
+<mapRoad start="NZVZ" end="KPRZ"/>
+
+<mapRoad start="TYEA" end="YIWM"/>
+
+<mapRoad start="PQLY" end="KPRZ"/>
+
+<mapRoad start="XGKK" end="XSAU"/>
+
+<mapRoad start="HUKS" end="HARU"/>
+
+<mapRoad start="GAAG" end="IDBY"/>
+
+<mapRoad start="NZVZ" end="QOMH"/>
+
+<mapRoad start="PLKM" end="EVAW"/>
+
+<mapRoad start="JMTO" end="PTEA"/>
+
+<mapRoad start="QXCY" end="HUKS"/>
+
+<mapRoad start="PTEA" end="IKUZ"/>
+
+<mapRoad start="SDMS" end="ZOHG"/>
+
+<mapRoad start="KYCL" end="EXFG"/>
+
+<createCity x="853" y="152" z="0" color="black" radius="5" name="DUTH"/>
+<createCity x="104" y="585" z="0" color="black" radius="5" name="LLTW"/>
+<createCity x="755" y="546" z="0" color="black" radius="5" name="HTYA"/>
+<createCity x="863" y="555" z="1" color="black" radius="5" name="FRPP"/>
+<createCity x="69" y="905" z="1" color="black" radius="5" name="DSVH"/>
+<createCity x="798" y="502" z="0" color="black" radius="5" name="VZRE"/>
+<createCity x="314" y="913" z="2" color="black" radius="5" name="WNSP"/>
+<createCity x="237" y="189" z="1" color="black" radius="5" name="WXIH"/>
+<createCity x="1011" y="418" z="0" color="black" radius="5" name="HJMH"/>
+<createCity x="527" y="275" z="2" color="black" radius="5" name="PWNV"/>
+
+
+<createCity x="125" y="331" z="2" color="black" radius="5" name="PWPV"/>
+<createCity x="423" y="971" z="0" color="black" radius="5" name="GFFQ"/>
+<createCity x="765" y="434" z="0" color="black" radius="5" name="MYHO"/>
+<createCity x="344" y="424" z="1" color="black" radius="5" name="ETUK"/>
+<createCity x="1002" y="549" z="2" color="black" radius="5" name="FTDP"/>
+<createCity x="290" y="972" z="1" color="black" radius="5" name="SUMT"/>
+<createCity x="262" y="994" z="1" color="black" radius="5" name="ELKA"/>
+<createCity x="816" y="860" z="0" color="black" radius="5" name="OJGJ"/>
+<createCity x="748" y="219" z="1" color="black" radius="5" name="TVOT"/>
+<createCity x="1011" y="331" z="2" color="black" radius="5" name="NPQE"/>
+
+<mapRoad start="KYCL" end="NJDX"/>
+
+<mapRoad start="CTAF" end="PWNV"/>
+
+<mapRoad start="JMTO" end="SDDE"/>
+
+<mapRoad start="HUKS" end="USVP"/>
+
+<mapRoad start="SLMZ" end="GUKY"/>
+
+<mapRoad start="GYGE" end="ZHQA"/>
+
+<mapRoad start="CTAF" end="USVP"/>
+
+<mapRoad start="QXCY" end="USVP"/>
+
+<mapRoad start="TYEA" end="FTDP"/>
+
+<mapRoad start="XSAU" end="USFM"/>
+
+<mapRoad start="EVAW" end="PWPV"/>
+
+<mapRoad start="PTEA" end="KPRZ"/>
+
+<mapRoad start="PQLY" end="ZOHG"/>
+
+<mapRoad start="NZVZ" end="ZOHG"/>
+
+<mapRoad start="JMTO" end="FRPP"/>
+
+<mapRoad start="NJDX" end="SLMZ"/>
+
+<mapRoad start="OJGJ" end="GUKY"/>
+
+<mapRoad start="YIWM" end="QOMH"/>
+
+<mapRoad start="XSAU" end="KPRZ"/>
+
+<mapRoad start="CZAQ" end="XSAU"/>
+
+<mapRoad start="MUWY" end="LLTW"/>
+<printPMQuadtree z="1"/>
+<mapRoad start="HUKS" end="WYSO"/>
+
+<mapRoad start="MYHO" end="GYGE"/>
+
+<mapRoad start="PTEA" end="SDMS"/>
+
+<mapRoad start="USVP" end="SMFN"/>
+<rangeRoads x="500" y="500" z="1" radius="200"/>
+<rangeCities x="500" y="500" z="1" radius="200"/>
+
+<mapRoad start="SACD" end="IKUZ"/>
+
+<mapRoad start="VZRE" end="ZHQA"/>
+
+<mapRoad start="PWNV" end="FTDP"/>
+
+<mapRoad start="PZCM" end="PWNV"/>
+
+<mapRoad start="IKHB" end="IKUZ"/>
+
+<mapRoad start="CZAQ" end="HTEE"/>
+
+<mapRoad start="DBCK" end="FRPP"/>
+
+<mapRoad start="TVOT" end="EXFG"/>
+
+<mapRoad start="FRPP" end="DBCK"/>
+
+<mapRoad start="MTCH" end="HUKS"/>
+
+<mapRoad start="SXXZ" end="IKUZ"/>
+
+<mapRoad start="PLKM" end="EVAW"/>
+
+<mapRoad start="ETUK" end="KPRZ"/>
+
+<mapRoad start="OJGJ" end="OJGJ"/>
+
+<mapRoad start="QXCY" end="FTDP"/>
+
+<mapRoad start="SLMZ" end="NZVZ"/>
+
+<mapRoad start="ELKA" end="TVOT"/>
+
+<mapRoad start="WXIH" end="KPRZ"/>
+
+<mapRoad start="EXFG" end="ZOHG"/>
+
+<mapRoad start="USVP" end="NPQE"/>
+
+<mapRoad start="SLMZ" end="SUMT"/>
+
+<mapRoad start="OGVQ" end="JIVD"/>
+
+<mapRoad start="WYSO" end="WNSP"/>
+
+<mapRoad start="GUKY" end="SUMT"/>
+
+<mapRoad start="MUWY" end="MUWY"/>
+
+<mapRoad start="DSVH" end="QOMH"/>
+
+<mapRoad start="PLKM" end="BROH"/>
+
+<mapRoad start="SDMS" end="JMTO"/>
+
+<mapRoad start="ETUK" end="IKUZ"/>
+
+<mapRoad start="OTNK" end="NPQE"/>
+
+<mapRoad start="SDDE" end="SXXZ"/>
+
+<mapRoad start="PTEA" end="JMTO"/>
+
+<mapRoad start="ZOHG" end="FRPP"/>
+
+<mapRoad start="NHJL" end="PLKM"/>
+
+<mapRoad start="NHJL" end="USFM"/>
+
+
+
+
+<mapRoad start="QXCY" end="CTAF"/>
+
+<mapRoad start="YTBP" end="WXIH"/>
+
+<mapRoad start="JMTO" end="WXIH"/>
+
+<mapRoad start="SOGH" end="GYGE"/>
+
+<mapRoad start="WXIH" end="IKHB"/>
+
+<mapRoad start="CTAF" end="GAAG"/>
+
+<mapRoad start="IKUZ" end="NJDX"/>
+
+<mapRoad start="BROH" end="YDCV"/>
+
+<mapRoad start="ETUK" end="YDCV"/>
+
+<mapRoad start="WYSO" end="SMFN"/>
+
+<mapRoad start="SXXZ" end="HTEE"/>
+
+<mapRoad start="YDCV" end="HARU"/>
+
+<mapRoad start="USFM" end="LLTW"/>
+
+<mapRoad start="GUKY" end="DBCK"/>
+<rangeRoads x="500" y="500" z="1" radius="200"/>
+<rangeCities x="500" y="500" z="1" radius="200"/>
+<rangeRoads x="500" y="500" z="1" radius="200"/>
+<rangeCities x="500" y="500" z="1" radius="200"/>
+
+<mapRoad start="PQLY" end="PTEA"/>
+
+<mapRoad start="GYGE" end="VZRE"/>
+
+<mapRoad start="IALC" end="IALC"/>
+
+<mapRoad start="GYGE" end="HJMH"/>
+
+<mapRoad start="MYHO" end="LLTW"/>
+
+<mapRoad start="WYSO" end="YDCV"/>
+
+<mapRoad start="USFM" end="EVAW"/>
+
+<mapRoad start="YIWM" end="PWPV"/>
+
+<mapRoad start="ZOHG" end="IKUZ"/>
+
+<mapRoad start="HJMH" end="MUWY"/>
+
+<mapRoad start="ETUK" end="NJDX"/>
+
+<mapRoad start="CCXD" end="FTDP"/>
+
+<mapRoad start="GUKY" end="SUMT"/>
+
+<mapRoad start="IALC" end="TVOT"/>
+
+<mapRoad start="CTAF" end="IDBY"/>
+
+<mapRoad start="PTEA" end="SLMZ"/>
+
+
+<mapRoad start="JMTO" end="SXXZ"/>
+
+<mapRoad start="HARU" end="CTAF"/>
+
+<mapRoad start="CCXD" end="DUTH"/>
+
+<mapRoad start="YTBP" end="XGKK"/>
+
+<mapRoad start="PLKM" end="HXSU"/>
+
+<mapRoad start="IALC" end="IALC"/>
+
+<mapRoad start="PWPV" end="MTCH"/>
+
+<mapRoad start="FRPP" end="IKUZ"/>
+
+<mapRoad start="YIWM" end="MTCH"/>
+
+<mapRoad start="GUKY" end="HTEE"/>
+
+<mapRoad start="HARU" end="NWCA"/>
+
+<mapRoad start="SMFN" end="QXCY"/>
+
+<mapRoad start="JMTO" end="NZVZ"/>
+
+<mapRoad start="CCXD" end="CCXD"/>
+
+<mapRoad start="MUWY" end="KPRZ"/>
+
+<mapRoad start="OTNK" end="PWPV"/>
+
+<mapRoad start="GYGE" end="VZRE"/>
+
+<mapRoad start="OGVQ" end="JIVD"/>
+
+<mapRoad start="CZAQ" end="IKHB"/>
+
+<mapRoad start="EXFG" end="PTEA"/>
+
+<mapRoad start="HARU" end="WYSO"/>
+
+<mapRoad start="XSAU" end="SLMZ"/>
+
+<mapRoad start="GYGE" end="GFFQ"/>
+
+<mapRoad start="EVAW" end="MUWY"/>
+
+<mapRoad start="SOGH" end="LLTW"/>
+
+<mapRoad start="SMFN" end="YIWM"/>
+
+<mapRoad start="GUKY" end="PQYO"/>
+
+<mapRoad start="XGKK" end="PZCM"/>
+
+<mapRoad start="PLKM" end="KPRZ"/>
+
+<mapRoad start="TVOT" end="IALC"/>
+
+
+<mapPortal x="301" y="300" z="2" name="WKKR"/>
+
+
+<mapRoad start="NZVZ" end="GUKY"/>
+
+<mapRoad start="KYCL" end="ELKA"/>
+
+<mapRoad start="YFII" end="MTCH"/>
+
+<mapRoad start="PWPV" end="IDBY"/>
+
+<mapRoad start="NHJL" end="SDMS"/>
+
+<mapRoad start="PWNV" end="FTDP"/>
+
+<mapRoad start="EVAW" end="PLKM"/>
+
+<mapRoad start="HWHR" end="FRPP"/>
+
+<mapRoad start="HWHR" end="BROH"/>
+
+<mapRoad start="EXFG" end="SDMS"/>
+
+<mapRoad start="MYHO" end="MUWY"/>
+
+<mapRoad start="SXXZ" end="PQLY"/>
+
+<mapRoad start="IKHB" end="FRPP"/>
+
+<mapRoad start="ETUK" end="IALC"/>
+
+<mapRoad start="DBCK" end="GUKY"/>
+
+<mapRoad start="YTBP" end="IALC"/>
+
+<mapRoad start="QXCY" end="XGKK"/>
+
+<mapRoad start="IKHB" end="ETUK"/>
+
+<mapRoad start="PQYO" end="HJMH"/>
+
+<mapRoad start="PQLY" end="FRPP"/>
+
+<mapRoad start="OTNK" end="QXCY"/>
+
+<mapRoad start="MYHO" end="LLTW"/>
+
+<mapRoad start="SOGH" end="HTYA"/>
+
+<mapRoad start="ZHQA" end="FRPP"/>
+
+<mapRoad start="SLMZ" end="KYCL"/>
+
+<mapRoad start="SDDE" end="YTBP"/>
+
+<mapRoad start="CEXA" end="NPQE"/>
+
+<mapRoad start="NPQE" end="YFII"/>
+
+<mapRoad start="QOMH" end="IKHB"/>
+
+<mapRoad start="VZRE" end="PQYO"/>
+
+
+<createCity x="213" y="679" z="0" color="black" radius="5" name="RPVD"/>
+<createCity x="293" y="63" z="1" color="black" radius="5" name="KQVL"/>
+<createCity x="531" y="593" z="0" color="black" radius="5" name="MUDT"/>
+<createCity x="892" y="928" z="1" color="black" radius="5" name="WYKH"/>
+<createCity x="178" y="828" z="2" color="black" radius="5" name="MTKN"/>
+<createCity x="253" y="1001" z="1" color="black" radius="5" name="GJKR"/>
+<createCity x="491" y="445" z="1" color="black" radius="5" name="YNPY"/>
+<createCity x="139" y="506" z="1" color="black" radius="5" name="ZLWD"/>
+<createCity x="327" y="207" z="1" color="black" radius="5" name="YNRH"/>
+<createCity x="527" y="17" z="1" color="black" radius="5" name="DTYF"/>
+
+
+
+<createCity x="431" y="940" z="2" color="black" radius="5" name="VIMO"/>
+<createCity x="928" y="427" z="0" color="black" radius="5" name="SWAZ"/>
+<createCity x="1021" y="278" z="1" color="black" radius="5" name="TSHM"/>
+<createCity x="879" y="608" z="1" color="black" radius="5" name="KHVR"/>
+<createCity x="309" y="744" z="2" color="black" radius="5" name="IFEH"/>
+<createCity x="900" y="993" z="0" color="black" radius="5" name="RNDX"/>
+<createCity x="396" y="951" z="2" color="black" radius="5" name="BHJQ"/>
+<createCity x="292" y="328" z="0" color="black" radius="5" name="JLZY"/>
+<createCity x="353" y="162" z="2" color="black" radius="5" name="ETJY"/>
+<createCity x="211" y="733" z="1" color="black" radius="5" name="ROIL"/>
+
+
+<createCity x="799" y="226" z="1" color="black" radius="5" name="SBHL"/>
+<createCity x="921" y="468" z="2" color="black" radius="5" name="VWDH"/>
+<createCity x="606" y="642" z="0" color="black" radius="5" name="XQGX"/>
+<createCity x="218" y="53" z="0" color="black" radius="5" name="APKG"/>
+<createCity x="784" y="94" z="1" color="black" radius="5" name="YMUG"/>
+<createCity x="562" y="691" z="0" color="black" radius="5" name="ANBA"/>
+<createCity x="528" y="1002" z="0" color="black" radius="5" name="LAID"/>
+<createCity x="858" y="613" z="2" color="black" radius="5" name="ABXR"/>
+<createCity x="1022" y="741" z="0" color="black" radius="5" name="OLKF"/>
+<createCity x="217" y="119" z="2" color="black" radius="5" name="HKSB"/>
+
+
+<mapPortal x="454" y="155" z="1" name="WHZI"/>
+
+<rangeRoads x="500" y="500" z="1" radius="200"/>
+<rangeCities x="500" y="500" z="1" radius="200"/>
+
+
+
+<mapRoad start="WYSO" end="ABXR"/>
+
+<mapRoad start="XSAU" end="WYKH"/>
+
+<mapRoad start="PWNV" end="MTCH"/>
+
+<mapRoad start="ZOHG" end="ROIL"/>
+
+<mapRoad start="KHVR" end="FRPP"/>
+
+<mapRoad start="JLZY" end="MUDT"/>
+
+<mapRoad start="OGVQ" end="PWNV"/>
+
+<mapRoad start="QOMH" end="TSHM"/>
+<rangeRoads x="500" y="500" z="1" radius="200"/>
+<rangeCities x="500" y="500" z="1" radius="200"/>
+
+<mapRoad start="QOMH" end="IKHB"/>
+
+<mapRoad start="HXSU" end="YIWM"/>
+
+<mapRoad start="OTNK" end="JIVD"/>
+
+<mapRoad start="KYCL" end="ZLWD"/>
+
+<mapRoad start="VZRE" end="HTYA"/>
+
+<mapRoad start="RNDX" end="HWHR"/>
+
+<mapRoad start="DSVH" end="WXIH"/>
+
+<mapRoad start="YMUG" end="WYKH"/>
+
+<mapRoad start="YFII" end="BHJQ"/>
+
+<mapRoad start="KQVL" end="IALC"/>
+
+<mapRoad start="MTKN" end="NROO"/>
+
+<mapRoad start="KQVL" end="KHVR"/>
+
+<mapRoad start="IKUZ" end="DBCK"/>
+
+<mapRoad start="YNRH" end="SXXZ"/>
+
+<mapRoad start="PZCM" end="YFII"/>
+
+<mapRoad start="OJGJ" end="SWAZ"/>
+
+<mapRoad start="NWCA" end="HARU"/>
+
+<mapRoad start="EVAW" end="ROIL"/>
+
+<mapRoad start="XQGX" end="APKG"/>
+
+<mapRoad start="VWDH" end="USVP"/>
+
+<mapRoad start="BHJQ" end="WYSO"/>
+
+<mapRoad start="USVP" end="HKSB"/>
+
+
+
+
+<mapPortal x="252" y="781" z="1" name="XPXQ"/>
+
+
+<mapPortal x="900" y="546" z="2" name="RFVG"/>
+
+
+<mapRoad start="SUMT" end="EXFG"/>
+
+<mapRoad start="LLTW" end="JLZY"/>
+
+<mapRoad start="CCXD" end="HXSU"/>
+
+<mapRoad start="ETUK" end="QOMH"/>
+
+<mapRoad start="EVAW" end="OGVQ"/>
+
+<mapRoad start="IKUZ" end="EXFG"/>
+
+<mapRoad start="ETJY" end="HUKS"/>
+
+<mapRoad start="GAAG" end="WNSP"/>
+
+<mapRoad start="DTYF" end="PTEA"/>
+
+<mapRoad start="IKUZ" end="IALC"/>
+
+<mapRoad start="SWAZ" end="RPVD"/>
+
+<mapRoad start="NJDX" end="GJKR"/>
+
+<mapRoad start="WXIH" end="SDMS"/>
+
+<mapRoad start="IALC" end="SBHL"/>
+
+<mapRoad start="SUMT" end="HTEE"/>
+
+<mapRoad start="YTBP" end="WYKH"/>
+
+<mapRoad start="XGKK" end="SDDE"/>
+
+<mapRoad start="EXFG" end="NZVZ"/>
+
+<mapRoad start="XSAU" end="PTEA"/>
+
+<mapRoad start="OJGJ" end="LLTW"/>
+
+<mapRoad start="JLZY" end="APKG"/>
+
+<mapRoad start="FRPP" end="DBCK"/>
+
+<mapRoad start="DBCK" end="ETUK"/>
+
+<mapRoad start="HARU" end="VWDH"/>
+
+<mapRoad start="OTNK" end="PQYO"/>
+
+<mapRoad start="WXIH" end="KQVL"/>
+
+<mapRoad start="CZAQ" end="IKHB"/>
+
+<mapRoad start="DSVH" end="OJGJ"/>
+
+<mapRoad start="USFM" end="MUWY"/>
+
+<mapRoad start="BHJQ" end="HBGS"/>
+
+
+
+
+<mapRoad start="NHJL" end="MUDT"/>
+
+<mapRoad start="NZVZ" end="SUMT"/>
+
+<mapRoad start="XGKK" end="IKHB"/>
+
+<mapRoad start="ZLWD" end="JMTO"/>
+
+<mapRoad start="ETUK" end="XGKK"/>
+
+<mapRoad start="OGVQ" end="NZVZ"/>
+
+<mapRoad start="YNPY" end="PWNV"/>
+
+<mapRoad start="ZLWD" end="PTEA"/>
+
+<mapRoad start="WYSO" end="OTNK"/>
+
+<mapRoad start="HTYA" end="LLTW"/>
+
+<mapRoad start="XQGX" end="CCXD"/>
+
+<mapRoad start="DSVH" end="ZLWD"/>
+
+<mapRoad start="TSHM" end="ZOHG"/>
+
+<mapRoad start="IKUZ" end="SUMT"/>
+
+<mapRoad start="IFEH" end="FRPP"/>
+
+<mapRoad start="SBHL" end="YNPY"/>
+
+<mapRoad start="HARU" end="WYSO"/>
+
+<mapRoad start="SDMS" end="GJKR"/>
+
+<mapRoad start="VWDH" end="IFEH"/>
+
+<mapRoad start="TSHM" end="PTEA"/>
+
+<mapRoad start="PWPV" end="YTBP"/>
+<rangeRoads x="500" y="500" z="1" radius="200"/>
+<rangeCities x="500" y="500" z="1" radius="200"/>
+
+<mapRoad start="TVOT" end="FRPP"/>
+
+<mapRoad start="MYHO" end="HXSU"/>
+
+<mapRoad start="DBCK" end="QOMH"/>
+
+<mapRoad start="PLKM" end="ANBA"/>
+
+<mapRoad start="CCXD" end="ANBA"/>
+
+<mapRoad start="DTYF" end="KPRZ"/>
+
+<mapRoad start="ZOHG" end="NZVZ"/>
+
+<mapRoad start="NHJL" end="HTYA"/>
+
+<mapRoad start="KHVR" end="PTEA"/>
+<printPMQuadtree z="1"/>
+
+
 
 </commands>
