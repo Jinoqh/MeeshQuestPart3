@@ -303,12 +303,14 @@ public abstract class PMQuadtree {
 				geometry.remove((Road) g);
 				
 				if(numRoadsForCity.get(((Road)g).getStart().getName()) <= 0){
-					geometry.remove(((Road)g).getStart());
-					numPoints--;	
+					if(geometry.remove(((Road)g).getStart())){
+						numPoints--;	
+					}
 				}
 				if(numRoadsForCity.get(((Road)g).getEnd().getName()) <= 0){
-					geometry.remove(((Road)g).getEnd());
-					numPoints--;	
+					if(geometry.remove(((Road)g).getEnd())){
+						numPoints--;	
+					}
 				}
 				
 				if(numPoints < 0){

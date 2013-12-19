@@ -2,100 +2,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <results>
   <success>
-    <command id="1" name="createCity"/>
+    <command name="createCity"/>
     <parameters>
       <name value="A"/>
-      <x value="4"/>
-      <y value="15"/>
-      <radius value="1"/>
+      <x value="2"/>
+      <y value="2"/>
+      <z value="1"/>
+      <radius value="5"/>
       <color value="black"/>
     </parameters>
     <output/>
   </success>
   <success>
-    <command id="2" name="createCity"/>
+    <command name="createCity"/>
     <parameters>
       <name value="B"/>
-      <x value="8"/>
-      <y value="12"/>
-      <radius value="1"/>
+      <x value="2"/>
+      <y value="6"/>
+      <z value="1"/>
+      <radius value="5"/>
       <color value="black"/>
     </parameters>
     <output/>
   </success>
   <success>
-    <command id="3" name="createCity"/>
+    <command name="createCity"/>
     <parameters>
       <name value="C"/>
       <x value="6"/>
-      <y value="12"/>
-      <radius value="1"/>
+      <y value="6"/>
+      <z value="1"/>
+      <radius value="5"/>
       <color value="black"/>
     </parameters>
     <output/>
   </success>
   <success>
-    <command id="4" name="createCity"/>
+    <command name="createCity"/>
     <parameters>
       <name value="D"/>
       <x value="6"/>
       <y value="2"/>
-      <radius value="1"/>
+      <z value="1"/>
+      <radius value="5"/>
       <color value="black"/>
     </parameters>
     <output/>
   </success>
   <success>
-    <command id="4" name="createCity"/>
+    <command name="createCity"/>
     <parameters>
       <name value="E"/>
-      <x value="18"/>
-      <y value="12"/>
-      <radius value="1"/>
-      <color value="black"/>
-    </parameters>
-    <output/>
-  </success>
-  <success>
-    <command id="4" name="createCity"/>
-    <parameters>
-      <name value="F"/>
-      <x value="2"/>
-      <y value="12"/>
-      <radius value="1"/>
-      <color value="black"/>
-    </parameters>
-    <output/>
-  </success>
-  <success>
-    <command id="4" name="createCity"/>
-    <parameters>
-      <name value="G"/>
-      <x value="55"/>
-      <y value="-1"/>
-      <radius value="1"/>
-      <color value="black"/>
-    </parameters>
-    <output/>
-  </success>
-  <success>
-    <command id="4" name="createCity"/>
-    <parameters>
-      <name value="H"/>
-      <x value="55"/>
-      <y value="65"/>
-      <radius value="1"/>
-      <color value="black"/>
-    </parameters>
-    <output/>
-  </success>
-  <success>
-    <command id="4" name="createCity"/>
-    <parameters>
-      <name value="I"/>
-      <x value="-1"/>
-      <y value="32"/>
-      <radius value="1"/>
+      <x value="4"/>
+      <y value="4"/>
+      <z value="1"/>
+      <radius value="5"/>
       <color value="black"/>
     </parameters>
     <output/>
@@ -103,80 +64,69 @@
   <success>
     <command name="mapRoad"/>
     <parameters>
-      <start value="G"/>
-      <end value="H"/>
+      <start value="A"/>
+      <end value="B"/>
     </parameters>
     <output>
-      <roadCreated end="H" start="G"/>
+      <roadCreated end="B" start="A"/>
     </output>
   </success>
   <success>
     <command name="mapRoad"/>
     <parameters>
-      <start value="I"/>
-      <end value="G"/>
+      <start value="C"/>
+      <end value="B"/>
     </parameters>
     <output>
-      <roadCreated end="G" start="I"/>
+      <roadCreated end="B" start="C"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="C"/>
+      <end value="D"/>
+    </parameters>
+    <output>
+      <roadCreated end="D" start="C"/>
     </output>
   </success>
   <success>
     <command name="mapRoad"/>
     <parameters>
       <start value="A"/>
-      <end value="I"/>
+      <end value="D"/>
     </parameters>
     <output>
-      <roadCreated end="I" start="A"/>
+      <roadCreated end="D" start="A"/>
     </output>
   </success>
-  <success>
+  <error type="roadViolatesPMRules">
     <command name="mapRoad"/>
     <parameters>
-      <start value="I"/>
-      <end value="H"/>
+      <start value="A"/>
+      <end value="E"/>
     </parameters>
-    <output>
-      <roadCreated end="H" start="I"/>
-    </output>
-  </success>
-  <success>
-    <command name="printPMQuadtree"/>
-    <parameters/>
-    <output>
-      <quadtree order="3">
-        <black cardinality="5">
-          <city color="black" name="A" radius="1" x="4" y="15"/>
-          <road end="I" start="A"/>
-          <road end="H" start="G"/>
-          <road end="I" start="G"/>
-          <road end="I" start="H"/>
-        </black>
-      </quadtree>
-    </output>
-  </success>
-  <success>
-    <command name="rangeCities"/>
+  </error>
+  <error type="roadViolatesPMRules">
+    <command name="mapRoad"/>
     <parameters>
-      <x value="32"/>
-      <y value="32"/>
-      <radius value="38"/>
-      <saveMap value="map"/>
+      <start value="E"/>
+      <end value="B"/>
     </parameters>
-    <output>
-      <cityList>
-        <city color="black" name="A" radius="1" x="4" y="15"/>
-      </cityList>
-    </output>
-  </success>
-  <success>
-    <command name="nearestCity"/>
+  </error>
+  <error type="roadViolatesPMRules">
+    <command name="mapRoad"/>
     <parameters>
-      <x value="55"/>
-      <y value="65"/>
+      <start value="C"/>
+      <end value="E"/>
     </parameters>
-    <output>
-      <city color="black" name="A" radius="1" x="4" y="15"/>
-    </output>
-  </success>
+  </error>
+  <error type="roadViolatesPMRules">
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="E"/>
+      <end value="D"/>
+    </parameters>
+  </error>
 </results>

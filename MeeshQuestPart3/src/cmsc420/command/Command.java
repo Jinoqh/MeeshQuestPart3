@@ -1406,12 +1406,13 @@ public class Command {
 			
 			City city = citiesByName.get(name);
 			final int z = city.getZ();
+		
 			if(pmPortalQuadtree.containsKey(z)){
 				try {
 					TreeSet<Road> removedRoads = null;
 					citiesByName.remove(name);
-					
-					if(pmPortalQuadtree.get(z).containsCity(name)){
+					citiesByLocation.remove(city);
+					if(!pmPortalQuadtree.get(z).containsCity(name)){
 						removedRoads = pmPortalQuadtree.get(z).removeCity(city);
 						Element cityUnmappedNode = results.createElement("cityUnmapped");
 						cityUnmappedNode.setAttribute("color", city.getColor());
@@ -1440,12 +1441,18 @@ public class Command {
 					e.printStackTrace();
 				}
 			} else {
-				addErrorNode("cityDoesNotExist", commandNode, parametersNode);
+				citiesByName.remove(name);
+				citiesByLocation.remove(city);
+				addSuccessNode(commandNode, parametersNode, outputNode);
 			}
 		}
 	}
 
-	public void processSweep(Element commandNode) {
+	public void processSweep(Element node) {
+		final Element commandNode = getCommandNode(node);
+		final Element parametersNode = results.createElement("parameters");
+		final Element outputNode = results.createElement("output");
 		citiesByName.sweep();
+		addSuccessNode(commandNode, parametersNode, outputNode);
 	}
 }

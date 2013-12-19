@@ -6,6 +6,7 @@ import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -51,22 +52,28 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
     
     public void sweep(){
     	AvlNode<K,V> newRoot = null;
-     
-    	for(Entry<K,V> entry : this.entrySet()){
-    		
-    		if(newRoot == null){
-    			newRoot = new AvlNode(entry.getKey(), entry.getValue(), comparator);
-    		}
-//	    	if(!((AvlNode) entry).isTrash()){
-//	    		newRoot.add(new AvlNode(entry.getKey(), entry.getValue(), comparator));
-//	    	}
-    		System.out.println(((AvlNode) entry).isTrash());
-    	}
-//    	
-//    	this.root = newRoot;
+    	newRoot = getAllNodes(root, newRoot);
+    	root = newRoot;
     }
 
-    public Comparator<? super K> comparator() {
+    private AvlNode<K,V> getAllNodes(AvlNode<K, V> node,
+			AvlNode<K, V> newRoot) {
+    	    	
+    	if(node == null)
+    		return null;
+    	if(!node.isTrash()){
+    		if(newRoot == null){
+    			newRoot = new AvlNode<K,V>(node);
+    		} else {
+    			newRoot.add(new AvlNode<K,V>(node));
+    		}
+    	}
+		getAllNodes(node.left, newRoot);
+		getAllNodes(node.right, newRoot);
+		return newRoot;
+	}
+
+	public Comparator<? super K> comparator() {
         return comparator;
     }
 
@@ -94,7 +101,12 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
     public boolean containsKey(Object key) {
         if (key == null)
             throw new NullPointerException();
-        return getNode(key) != null;
+        AvlNode<K,V> node = getNode(key);
+        if(node == null)
+        	return false;
+        else {
+        	return node.isTrash() ? false : true;
+        }
     }
 
     public boolean containsValue(Object value) {
@@ -122,17 +134,28 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
             modCount++;
             return null;
         }
-        AvlNode<K, V> e = new AvlNode<K, V>(key, value, comparator);
-        V oldValue = root.add(e);
-
-        modCount++;
-        if (oldValue == null) {
-            fixAfterModification(e);
-            size++;
-            return null;
+        AvlNode<K, V> e = getNode(key);
+     
+        if(e == null || !e.isTrash()){
+        	e = new AvlNode<K, V>(key, value, comparator);
+        	V oldValue = root.add(e);
+        	modCount++;
+            if (oldValue == null) {
+               fixAfterModification(e);
+               size++;
+               return null;
+           } else {
+               return oldValue;
+           }
         } else {
-            return oldValue;
+        	size++;
+        	e.unMarkAsTrash();
+        	e.setValue(value);
+        	return null;
         }
+       
+
+        
     }
 
     public V remove(Object key) {
@@ -144,9 +167,13 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
     	if(node == null)
     		return null;
     	
-    	node.markAsTrash();
-    	size--;
-    	return node.getValue();
+    	if(node.isTrash()){
+    		return null;
+    	} else {
+    		node.markAsTrash();
+        	size--;
+        	return node.getValue();
+    	}
     }
 
     public K firstKey() {
@@ -205,7 +232,11 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
             this.trash = false;
         }
 
-        public V add(AvlNode<K, V> node) {
+        public AvlNode(AvlNode<K, V> node) {
+			this(node.getKey(), node.getValue(), node.comparator);
+		}
+
+		public V add(AvlNode<K, V> node) {
             int cmp = compare(node.key, this.key);
             if (cmp < 0) {
                 if (left == null) {
@@ -232,7 +263,12 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
                     return ret;
                 }
             } else {
-                return this.setValue(node.value);
+            	if(this.isTrash()){
+            		this.setValue(node.value);
+            		return null;
+            	} else {
+            		return this.setValue(node.value);
+            	}
             }
         }
 
@@ -287,6 +323,10 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
         public void markAsTrash(){
         	this.trash = true;
         }
+        
+        public void unMarkAsTrash(){
+        	this.trash = false;
+        }
 
         @SuppressWarnings({ "unchecked" })
         private int compare(Object k1, Object k2) {
@@ -295,10 +335,18 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
         }
 
         public Node buildXmlNode(final Node parent) {
-            final Element e = parent.getOwnerDocument().createElement("node");
-            e.setAttribute("key", key.toString());
-            e.setAttribute("value", value.toString());
-
+        	
+        	
+            final Element e;
+            if(this.isTrash()){
+            	e = parent.getOwnerDocument().createElement("sentinel");
+            } else {
+            	e = parent.getOwnerDocument().createElement("node");
+                e.setAttribute("value", value.toString());
+            }
+          	e.setAttribute("key", key.toString());
+            
+            
             if (left != null) {
                 e.appendChild(left.buildXmlNode(e));
             } else {
@@ -314,7 +362,7 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
         }
     }
 
-    private final AvlNode<K, V> getNode(Object key) {
+    public final AvlNode<K, V> getNode(Object key) {
         AvlNode<K, V> p = root;
         while (p != null) {
             int cmp = compare(key, p.key);
@@ -323,11 +371,11 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
             else if (cmp > 0)
                 p = p.right;
             else
-                return p.isTrash() ? null : p;
+                return p;
         }
         return null;
     }
-
+    
     private final boolean nodeContainsValue(AvlNode<K, V> node, Object value) {
         if (node == null)
             return false;
@@ -341,17 +389,33 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
 
     private final AvlNode<K, V> getFirstNode() {
         AvlNode<K, V> p = root;
-        if (p != null)
+        if (p != null){
             while (p.left != null)
                 p = p.left;
+        
+	        while(p.isTrash()){
+	        	if(p.parent == null)
+	        		return null;
+	        	p = p.parent;
+	        }
+	        return p;
+        }
         return p;
     }
-
+    
     private final AvlNode<K, V> getLastNode() {
         AvlNode<K, V> p = root;
-        if (p != null)
+        if (p != null){
             while (p.right != null)
                 p = p.right;
+            
+            while(p.isTrash()){
+	        	if(p.parent == null)
+	        		return null;
+	        	p = p.parent;
+	        }
+	        return p;
+        }
         return p;
     }
 
@@ -533,6 +597,11 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
             Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
             V value = entry.getValue();
             AvlNode<K, V> p = getNode(entry.getKey());
+            if (p == null) 
+            	return false;
+            if(p.isTrash())
+            	return false;
+            
             return p != null && valEquals(p.getValue(), value);
         }
 
@@ -645,6 +714,15 @@ public class AvlGTree<K, V> extends AbstractMap<K, V> implements
                 throw new ConcurrentModificationException();
 
             next = successor(e);
+            if(next != null && next.isTrash()){
+		        while(next.isTrash()){
+		            next = successor(next);
+		            if(next == null)
+		            	break;
+		        }
+            }
+            
+            
             lastReturned = e;
             return e;
         }
